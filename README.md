@@ -96,13 +96,47 @@ alimentar procesos formales (como OpenPages), vale la pena revisar:
   de fraseo entre versiones del plugin de Tenable pero el CVE es el mismo.
 
 ### Integración con OpenPages
+
+OpenPages ITG (IT Governance) tiene un objeto nativo **Vulnerability**,
+pensado justo para este tipo de dato (escaneos automatizados de
+vulnerabilidades de activos), relacionado con objetos **Asset/System**.
+ORM (Operational Risk Management) no captura vulnerabilidades directamente
+— ahí entraría solo si una vulnerabilidad crítica se decide escalar como
+Riesgo operacional, vía un link entre el objeto Vulnerability/Asset y un
+objeto Risk. Esa relación ITG↔ORM es una decisión de gobierno que Actinver
+tiene que definir, no algo que se resuelva a nivel de este pipeline.
+
+Pendientes concretos antes de automatizar la entrega a OpenPages:
+
 - [ ] `asset_id_canonical` es una clave **interna** de este pipeline, no un
-  ID de negocio. Cuando OpenPages esté implementado, se necesita una tabla
-  de correspondencia (`asset_id_canonical` ↔ ID de activo en OpenPages) para
-  no duplicar activos en cada re-ingesta.
-- [ ] Confirmar con el equipo de OpenPages el formato de importación esperado
-  (columnas, tipos de dato, si acepta `.xlsx` o requiere CSV/API) antes de
-  automatizar la entrega.
+  ID de negocio. Se necesita una tabla de correspondencia
+  (`asset_id_canonical` ↔ ID real del Asset/System en OpenPages) para no
+  duplicar activos en cada re-ingesta.
+- [ ] **Pedir al administrador de OpenPages el export de una plantilla
+  FastMap vacía** de los objetos **Vulnerability** y **Asset/System**. Los
+  nombres de campo son personalizables por cliente, así que no se puede
+  asumir el esquema "de fábrica" — esa plantilla da los nombres reales para
+  mapear cada columna de nuestro Excel limpio sin adivinar.
+- [ ] Confirmar si el objeto Vulnerability de ITG ya está habilitado en la
+  instancia de Actinver (depende del licenciamiento/configuración activa).
+- [ ] Mapeo sugerido, a validar contra la plantilla real:
+  - `asset.host_name`, `asset.ipv4_addresses`, `asset.operating_system` →
+    atributos del objeto **Asset/System**
+  - `definition.name`, `severity`, `port`, `output` → atributos del objeto
+    **Vulnerability**
+  - `severity` probablemente necesite mapearse a la escala de severidad
+    que use OpenPages (puede no ser Critical/High/Medium/Low)
+  - Agregar `definition.cve` a la salida si el objeto Vulnerability tiene
+    campo para CVE — es una clave más confiable que `definition.name` para
+    evitar duplicados entre escaneos
+  - Agregar un `external_id`/`source_system_id` estable de Tenable (si
+    existe) para que reimportaciones actualicen el mismo registro en vez
+    de crear uno nuevo
+  - `merged_duplicate_count` y `os_variants_seen` probablemente vayan a un
+    campo de notas/texto libre, no a un campo estructurado
+- [ ] Confirmar el mecanismo de carga: plantilla FastMap (Excel/CSV) para
+  cargas periódicas, o REST API para automatizar el envío directo desde
+  esta app en vez de solo generar un archivo descargable.
 
 ### Escala y rendimiento
 - [ ] Este piloto se probó con 59 filas. **No se ha probado con el volumen
