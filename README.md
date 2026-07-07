@@ -35,6 +35,20 @@ Standard Build 9600"), lo que genera:
    se conserva una sola fila, priorizando mayor severidad y fecha más reciente.
 4. **Auditoría**: cada fusión queda registrada (qué filas originales se
    colapsaron, cuál se conservó y por qué) — nada se descarta en silencio.
+5. **Clasificación "Joya de la Corona" (opcional)**: si se carga un archivo
+   `listado_joyas.xlsx` (columna `Joyas` con IPs), el motor compara cada
+   `asset.ipv4_addresses` contra ese listado (soporta múltiples IPs por
+   celda, separadas por coma/`;`/espacio). Si hace match:
+   - Se marca `es_joya_corona = True`.
+   - Se valida además que `asset.tags` contenga la etiqueta
+     `01.ACT.JOYAS` (campo `tiene_tag_joyas`).
+   - `clasificacion_joyas` resume el resultado cruzado:
+     - `"Joya de la Corona (validada por tag)"` — IP en listado y tag presente.
+     - `"Joya de la Corona (IP en listado, SIN tag 01.ACT.JOYAS)"` —
+       inconsistencia: la IP es crítica según el listado pero el activo no
+       trae la clasificación formal esperada en OpenPages/Tenable.
+   - Si no se carga el listado de joyas, estos campos quedan vacíos/`False`
+     y el resto del pipeline funciona igual que antes (retrocompatible).
 
 ## Estructura del repo
 
@@ -46,6 +60,22 @@ Standard Build 9600"), lo que genera:
 ├── .streamlit/config.toml   # Tema claro forzado (paleta IBM Carbon)
 └── DEPLOY.md                 # Guía paso a paso de despliegue en Code Engine
 ```
+
+## Archivo de entrada opcional: listado de Joyas de la Corona
+
+Además del export de Tenable, la app acepta opcionalmente un segundo
+archivo `.xlsx` con una sola columna llamada `Joyas`, donde cada fila es
+una IP considerada crítica para el negocio ("Joya de la Corona"). Ejemplo:
+
+| Joyas          |
+|----------------|
+| 192.168.223.18 |
+| 10.10.110.88   |
+
+Si se carga, el archivo limpio final incluye las columnas `asset.tags`,
+`es_joya_corona`, `tiene_tag_joyas` y `clasificacion_joyas` (ver detalle en
+la sección "Qué resuelve" más arriba). Si no se carga, la app funciona
+exactamente igual que antes de esta funcionalidad.
 
 ## Uso local
 
@@ -94,6 +124,11 @@ alimentar procesos formales (como OpenPages), vale la pena revisar:
 - [ ] Revisar si conviene deduplicar también por `definition.cve` además de
   `definition.name`, para los casos donde el nombre de la definición cambia
   de fraseo entre versiones del plugin de Tenable pero el CVE es el mismo.
+- [ ] **Matching de "Joya de la Corona" por IP exacta**: hoy la comparación
+  contra `listado_joyas.xlsx` es string-a-string. Si el listado llegara a
+  incluir rangos o notación CIDR en vez de IPs individuales, habría que
+  extender `load_joyas_ip_set`/`extract_ips` en `clean_engine.py` para
+  resolver membresía de rango en vez de igualdad exacta.
 
 ### Integración con OpenPages
 

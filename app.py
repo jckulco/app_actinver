@@ -150,16 +150,28 @@ with st.expander("Reglas de limpieza aplicadas en esta versión", expanded=False
   conserva una sola fila, priorizando la de mayor severidad y la más reciente.
 - **Nada se descarta silenciosamente**: cada fila que se fusiona queda registrada en la
   hoja de auditoría del archivo de salida, con el detalle de qué se conservó y por qué.
+- **Joya de la Corona**: se compara `asset.ipv4_addresses` contra un listado externo de IPs
+  críticas (`listado_joyas.xlsx`, columna `Joyas`). Si hace match, el activo se marca como
+  **Joya de la Corona**. Adicionalmente se valida que `asset.tags` contenga la etiqueta
+  `01.ACT.JOYAS`: si una IP está en el listado pero el activo **no** trae esa etiqueta, se
+  marca como una inconsistencia a revisar (IP crítica sin la clasificación formal esperada).
         """
     )
 
 st.markdown('<hr class="carbon-rule">', unsafe_allow_html=True)
 st.markdown('<div class="carbon-eyebrow">Paso 1</div>', unsafe_allow_html=True)
-uploaded = st.file_uploader("Carga el archivo exportado de Tenable (.xlsx)", type=["xlsx"])
+col_a, col_b = st.columns(2)
+with col_a:
+    uploaded = st.file_uploader("Carga el archivo exportado de Tenable (.xlsx)", type=["xlsx"])
+with col_b:
+    joyas_uploaded = st.file_uploader(
+        "Carga el listado de IPs 'Joya de la Corona' (.xlsx, opcional)", type=["xlsx"]
+    )
 
 if uploaded is not None:
     try:
-        result = clean_tenable_export(pd.read_excel(uploaded))
+        joyas_df = pd.read_excel(joyas_uploaded) if joyas_uploaded is not None else None
+        result = clean_tenable_export(pd.read_excel(uploaded), joyas_df)
     except Exception as e:
         st.error(f"No se pudo procesar el archivo. Detalle: {e}")
         st.stop()
@@ -180,10 +192,29 @@ if uploaded is not None:
     c6.metric("Activos con SO inconsistente", ins["activos_con_multiples_os_registrados"])
     c7.metric("Vulnerabilidades críticas conservadas", ins["severidad_criticas_conservadas"])
 
+    if joyas_uploaded is not None:
+        c8, c9 = st.columns(2)
+        c8.metric("Activos 'Joya de la Corona'", ins["activos_joya_corona"])
+        c9.metric(
+            "Joyas SIN tag 01.ACT.JOYAS",
+            ins["activos_joya_sin_tag"],
+            help="IP está en el listado de Joyas pero asset.tags no trae la etiqueta 01.ACT.JOYAS",
+        )
+        if ins["activos_joya_sin_tag"] > 0:
+            st.warning(
+                f"⚠️ {ins['activos_joya_sin_tag']} activo(s) tienen una IP clasificada como "
+                "'Joya de la Corona' pero no traen la etiqueta 01.ACT.JOYAS en asset.tags. "
+                "Revisar en la pestaña 'Joyas de la Corona'."
+            )
+
     st.markdown('<hr class="carbon-rule">', unsafe_allow_html=True)
     st.markdown('<div class="carbon-eyebrow">Paso 3 · Detalle</div>', unsafe_allow_html=True)
 
-    tab1, tab2, tab3 = st.tabs(["Datos limpios", "Auditoría de fusiones", "Distribución de severidad"])
+    tab_names = ["Datos limpios", "Auditoría de fusiones", "Distribución de severidad"]
+    if joyas_uploaded is not None:
+        tab_names.append("Joyas de la Corona")
+    tabs = st.tabs(tab_names)
+    tab1, tab2, tab3 = tabs[0], tabs[1], tabs[2]
 
     with tab1:
         st.dataframe(result.clean_df, use_container_width=True, height=420)
@@ -193,6 +224,31 @@ if uploaded is not None:
             st.info("No se encontraron filas duplicadas que requirieran fusión.")
         else:
             st.dataframe(result.audit_df, use_container_width=True, height=420)
+
+    if joyas_uploaded is not None:
+        with tabs[3]:
+            joyas_rows = result.clean_df[result.clean_df["es_joya_corona"]]
+            if joyas_rows.empty:
+                st.info("Ninguna IP del archivo coincidió con el listado de Joyas de la Corona.")
+            else:
+                sin_tag = joyas_rows[~joyas_rows["tiene_tag_joyas"]]
+                if not sin_tag.empty:
+                    st.markdown("**Inconsistencias — IP en listado de Joyas, sin tag `01.ACT.JOYAS`:**")
+                    st.dataframe(
+                        sin_tag[
+                            ["asset_id_canonical", "asset.host_name", "asset.ipv4_addresses",
+                             "asset.tags", "clasificacion_joyas"]
+                        ],
+                        use_container_width=True,
+                    )
+                st.markdown("**Todos los activos clasificados como Joya de la Corona:**")
+                st.dataframe(
+                    joyas_rows[
+                        ["asset_id_canonical", "asset.host_name", "asset.ipv4_addresses",
+                         "tiene_tag_joyas", "clasificacion_joyas"]
+                    ],
+                    use_container_width=True,
+                )
 
     with tab3:
         sev_order = ["Critical", "High", "Medium", "Low", "Info"]

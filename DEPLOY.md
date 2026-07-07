@@ -62,5 +62,10 @@ ibmcloud ce application update --name vuln-cleaner --image icr.io/<namespace>/vu
   limpio, y no queda ningún dato guardado en el servidor. Para el piloto esto es
   suficiente; si más adelante se necesita historial de corridas, se añadiría
   IBM Cloud Object Storage.
+- Desde esta versión, la app acepta un segundo archivo `.xlsx` opcional (listado de
+  IPs "Joya de la Corona", columna `Joyas`) para clasificar activos críticos. No
+  requiere cambios de infraestructura ni de variables de entorno — no hay que
+  actualizar nada en Code Engine por este cambio, solo redesplegar la imagen con el
+  código nuevo (paso 5 de esta guía).
 - Prueba local antes de desplegar: `docker build -t vuln-cleaner-local . && docker run -p 8080:8080 vuln-cleaner-local`
   y abre `http://localhost:8080`.

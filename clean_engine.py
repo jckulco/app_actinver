@@ -10,9 +10,62 @@ Uso:
     result.insights       -> dict con métricas para el panel de la app
 """
 import re
+import json
 import hashlib
 from dataclasses import dataclass, field
 import pandas as pd
+
+JOYAS_TAG_VALUE = "01.ACT.JOYAS"
+
+
+def normalize_ip(ip):
+    """Normaliza una IP a texto plano comparable (quita espacios; si el campo
+    trae varias IPs separadas por coma/;, se maneja en extract_ips)."""
+    if pd.isna(ip):
+        return None
+    s = str(ip).strip()
+    return s or None
+
+
+def extract_ips(ipv4_field):
+    """asset.ipv4_addresses puede traer una sola IP o varias separadas por
+    coma/punto y coma/espacio. Devuelve un set de IPs normalizadas."""
+    if pd.isna(ipv4_field):
+        return set()
+    raw = str(ipv4_field)
+    parts = re.split(r"[,;\s]+", raw.strip())
+    return {p for p in (normalize_ip(p) for p in parts) if p}
+
+
+def load_joyas_ip_set(joyas_df, column="Joyas"):
+    """Carga el listado de IPs consideradas 'Joya de la Corona' desde el
+    archivo listado_joyas.xlsx (columna 'Joyas' por default)."""
+    if column not in joyas_df.columns:
+        raise ValueError(f"El archivo de joyas no tiene la columna '{column}'.")
+    ips = set()
+    for val in joyas_df[column].dropna():
+        ips |= extract_ips(val)
+    return ips
+
+
+def has_joyas_tag(tags_field):
+    """Revisa si asset.tags (string JSON tipo
+    '[{"category":...,"value":"01.ACT.JOYAS"}, ...]') contiene el valor
+    01.ACT.JOYAS. Es tolerante a JSON malformado: si no parsea, cae a un
+    chequeo de substring plano."""
+    if pd.isna(tags_field):
+        return False
+    raw = str(tags_field)
+    try:
+        items = json.loads(raw)
+        if isinstance(items, list):
+            return any(
+                isinstance(it, dict) and str(it.get("value", "")) == JOYAS_TAG_VALUE
+                for it in items
+            )
+    except (json.JSONDecodeError, TypeError):
+        pass
+    return JOYAS_TAG_VALUE in raw
 
 
 def normalize_hostname(name):
@@ -53,7 +106,15 @@ class CleanResult:
     insights: dict = field(default_factory=dict)
 
 
-def clean_tenable_export(path_or_df):
+def clean_tenable_export(path_or_df, joyas_path_or_df=None):
+    """
+    joyas_path_or_df: opcional. Ruta o DataFrame del listado de IPs
+    consideradas 'Joya de la Corona' (columna 'Joyas'). Si se provee, se
+    agregan al resultado los campos:
+      - es_joya_corona (bool): la IP del activo coincide con el listado
+      - tiene_tag_joyas (bool): asset.tags contiene "01.ACT.JOYAS"
+      - alerta_clasificacion_joyas (str): inconsistencia entre IP-listado y tag
+    """
     df = pd.read_excel(path_or_df) if isinstance(path_or_df, str) else path_or_df.copy()
 
     original_rows = len(df)
@@ -106,7 +167,42 @@ def clean_tenable_export(path_or_df):
         by=["asset.host_name", "definition.name"]
     ).reset_index(drop=True)
 
-    # 3) Construir hoja de auditoría: qué filas originales se colapsaron en cuál fila final
+    # 2.5) Clasificación "Joya de la Corona": match de IP contra listado externo,
+    # y validación cruzada contra asset.tags (01.ACT.JOYAS)
+    clean_out["asset.tags"] = clean["asset.tags"].values if "asset.tags" in clean.columns else None
+
+    if joyas_path_or_df is not None:
+        joyas_df = (
+            pd.read_excel(joyas_path_or_df)
+            if isinstance(joyas_path_or_df, str)
+            else joyas_path_or_df.copy()
+        )
+        joyas_ip_set = load_joyas_ip_set(joyas_df)
+
+        def ip_matches_joyas(ipv4_field):
+            return bool(extract_ips(ipv4_field) & joyas_ip_set)
+
+        clean_out["es_joya_corona"] = clean_out["asset.ipv4_addresses"].apply(ip_matches_joyas)
+        clean_out["tiene_tag_joyas"] = clean_out["asset.tags"].apply(has_joyas_tag)
+
+        def clasificacion(row):
+            if row["es_joya_corona"] and row["tiene_tag_joyas"]:
+                return "Joya de la Corona (validada por tag)"
+            if row["es_joya_corona"] and not row["tiene_tag_joyas"]:
+                return "Joya de la Corona (IP en listado, SIN tag 01.ACT.JOYAS)"
+            return ""
+
+        clean_out["clasificacion_joyas"] = clean_out.apply(clasificacion, axis=1)
+    else:
+        joyas_ip_set = set()
+        clean_out["es_joya_corona"] = False
+        clean_out["tiene_tag_joyas"] = clean_out["asset.tags"].apply(has_joyas_tag)
+        clean_out["clasificacion_joyas"] = ""
+
+    joyas_cols = ["asset.tags", "es_joya_corona", "tiene_tag_joyas", "clasificacion_joyas"]
+    clean_out = clean_out[output_cols[:5] + joyas_cols + output_cols[5:]]
+
+    # 3) Construir hoja de auditoria: qué filas originales se colapsaron en cuál fila final
     audit_rows = []
     for vuln_key, group in df_sorted.groupby("_vuln_key"):
         if len(group) <= 1:
@@ -136,6 +232,14 @@ def clean_tenable_export(path_or_df):
         "activos_con_multiples_os_registrados": int((variants_by_asset.apply(len) > 1).sum()),
         "severidad_criticas_conservadas": int((clean_out["severity"] == "Critical").sum()),
         "severidad_altas_conservadas": int((clean_out["severity"] == "High").sum()),
+        "activos_joya_corona": int(
+            clean_out.loc[clean_out["es_joya_corona"], "asset_id_canonical"].nunique()
+        ),
+        "activos_joya_sin_tag": int(
+            clean_out.loc[
+                clean_out["es_joya_corona"] & ~clean_out["tiene_tag_joyas"], "asset_id_canonical"
+            ].nunique()
+        ),
     }
 
     return CleanResult(clean_df=clean_out, audit_df=audit_df, insights=insights)
@@ -143,5 +247,7 @@ def clean_tenable_export(path_or_df):
 
 if __name__ == "__main__":
     import sys
-    result = clean_tenable_export(sys.argv[1] if len(sys.argv) > 1 else "Vul_IBM.xlsx")
+    vuln_path = sys.argv[1] if len(sys.argv) > 1 else "Vul_IBM.xlsx"
+    joyas_path = sys.argv[2] if len(sys.argv) > 2 else None
+    result = clean_tenable_export(vuln_path, joyas_path)
     print(result.insights)
