@@ -6,6 +6,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY clean_engine.py .
+COPY openpages_mapper.py .
 COPY app.py .
 COPY .streamlit/ .streamlit/
 
