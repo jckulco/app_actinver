@@ -55,11 +55,51 @@ Standard Build 9600"), lo que genera:
 ```
 ├── app.py                 # Interfaz Streamlit (carga, insights, descarga)
 ├── clean_engine.py         # Lógica de limpieza, sin dependencias de UI
+├── openpages_mapper.py      # Mapeo del Excel limpio a payloads JSON de OpenPages
 ├── requirements.txt
 ├── Dockerfile               # Build para Code Engine (puerto 8080 vía $PORT)
 ├── .streamlit/config.toml   # Tema claro forzado (paleta IBM Carbon)
 └── DEPLOY.md                 # Guía paso a paso de despliegue en Code Engine
 ```
+
+## Exportación a OpenPages (`openpages_mapper.py`)
+
+Genera, a partir del Excel limpio, dos conjuntos de payloads JSON listos para
+`POST /openpages/api/v2/contents` (mismo patrón usado en `ejemplo_carga.py`):
+
+- **`assets`**: un payload por activo único (`asset_id_canonical`) para el
+  objeto **Asset/System** (host, IP, SO, tags).
+- **`vulnerabilities`**: un payload por fila del Excel limpio para el objeto
+  **Vulnerability**.
+
+Puntos importantes a tener en cuenta antes de usar esto contra producción:
+
+- **Vulnerability y Asset/System son objetos distintos.** `host_name`,
+  `ipv4` y `operating_system` no son campos de Vulnerability — viven en
+  Asset/System, y se relacionan vía `primary_parent_id`. Por eso cada
+  payload de Vulnerability trae `primary_parent_id: null` y un campo
+  auxiliar `_pending_asset_lookup` con la clave `asset_id_canonical` a
+  resolver una vez que exista la tabla de correspondencia con el ID real
+  del Asset/System en OpenPages (pendiente, ver sección de abajo).
+- **`type_definition_id` también viene en `null`**: se resuelve en tiempo
+  de ejecución llamando a `get_all_types(...)` (como en `ejemplo_carga.py`),
+  no se hardcodea porque cambia por instancia/ambiente.
+- **Nombres de campo son constantes editables**, no hardcodeados dentro de
+  la lógica: `FIELD_MAP_VULNERABILITY` y `FIELD_MAP_ASSET` en
+  `openpages_mapper.py`. Los nombres usados hoy vienen de un query de
+  ejemplo (`objetos.json`) cuya categoría trae el prefijo `Demo-Vulner:` —
+  es decir, probablemente la categoría de **demo** de OpenPages, no la
+  categoría personalizada real de producción de Actinver. Antes de enviar
+  contra producción, hay que confirmar los nombres reales (vía la
+  plantilla FastMap pendiente) y actualizar esas dos constantes.
+- **Mapeo de severidad**: Tenable trae 5 niveles (Critical/High/Medium/
+  Low/Info); el esquema de ejemplo de OpenPages solo expone 3
+  (High/Medium/Low). El mapeo usado (`SEVERITY_MAP` en
+  `openpages_mapper.py`) colapsa Critical→High e Info→Low — a validar con
+  el equipo de GRC si esa es la equivalencia correcta.
+
+Desde la app, el botón "Descargar payloads OpenPages (.json)" en el Paso 5
+genera este archivo listo para usar como insumo del script de carga real.
 
 ## Archivo de entrada opcional: listado de Joyas de la Corona
 
@@ -143,10 +183,19 @@ tiene que definir, no algo que se resuelva a nivel de este pipeline.
 
 Pendientes concretos antes de automatizar la entrega a OpenPages:
 
+- [x] Generar los payloads JSON con la forma que espera la API v2 —
+  resuelto en `openpages_mapper.py` (`build_openpages_export`), con
+  nombres de campo dejados como constantes editables.
+- [ ] **Confirmar si `Demo-Vulner:` es la categoría real de producción o
+  la de demo.** Todo indica que es la de demo (nombre de la categoría lo
+  delata). Hay que pedir el query/plantilla equivalente contra el
+  ambiente productivo de Actinver y actualizar `FIELD_MAP_VULNERABILITY`
+  y `FIELD_MAP_ASSET` en `openpages_mapper.py`.
 - [ ] `asset_id_canonical` es una clave **interna** de este pipeline, no un
   ID de negocio. Se necesita una tabla de correspondencia
   (`asset_id_canonical` ↔ ID real del Asset/System en OpenPages) para no
-  duplicar activos en cada re-ingesta.
+  duplicar activos en cada re-ingesta — hoy los payloads de Vulnerability
+  traen `primary_parent_id: null` y `_pending_asset_lookup` en su lugar.
 - [ ] **Pedir al administrador de OpenPages el export de una plantilla
   FastMap vacía** de los objetos **Vulnerability** y **Asset/System**. Los
   nombres de campo son personalizables por cliente, así que no se puede
@@ -154,6 +203,9 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
   mapear cada columna de nuestro Excel limpio sin adivinar.
 - [ ] Confirmar si el objeto Vulnerability de ITG ya está habilitado en la
   instancia de Actinver (depende del licenciamiento/configuración activa).
+- [ ] Validar el mapeo de severidad Tenable (5 niveles) → OpenPages (3
+  niveles observados) con el equipo de GRC — ver `SEVERITY_MAP` en
+  `openpages_mapper.py`.
 - [ ] Mapeo sugerido, a validar contra la plantilla real:
   - `asset.host_name`, `asset.ipv4_addresses`, `asset.operating_system` →
     atributos del objeto **Asset/System**

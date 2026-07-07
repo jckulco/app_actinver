@@ -1,4 +1,5 @@
 import io
+import json
 import pandas as pd
 import streamlit as st
 import altair as alt
@@ -6,6 +7,7 @@ from openpyxl import load_workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 
 from clean_engine import clean_tenable_export
+from openpages_mapper import build_openpages_export
 
 # ---------------------------------------------------------------------------
 # Carbon Design System tokens (IBM)
@@ -321,6 +323,23 @@ if uploaded is not None:
         data=final_buffer,
         file_name="vulnerabilidades_limpio.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+
+    st.markdown('<hr class="carbon-rule">', unsafe_allow_html=True)
+    st.markdown('<div class="carbon-eyebrow">Paso 5 · Exportar a OpenPages</div>', unsafe_allow_html=True)
+    st.caption(
+        "Payloads JSON listos para la API v2 de OpenPages (patrón de ejemplo_carga.py). "
+        "`type_definition_id` y `primary_parent_id` quedan en `null`: se resuelven en tiempo de "
+        "ejecución (`get_all_types`) y con la tabla de correspondencia asset_id_canonical ↔ ID de "
+        "OpenPages, aún pendiente. Nombres de campo configurables en `openpages_mapper.py`."
+    )
+    openpages_export = build_openpages_export(result.clean_df)
+    openpages_json = json.dumps(openpages_export, indent=2, default=str, ensure_ascii=False)
+    st.download_button(
+        label="Descargar payloads OpenPages (.json)",
+        data=openpages_json,
+        file_name="openpages_payloads.json",
+        mime="application/json",
     )
 else:
     st.info("Carga un archivo .xlsx exportado de Tenable para comenzar.")

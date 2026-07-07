@@ -1,0 +1,3918 @@
+{
+  "_notas": "type_definition_id y primary_parent_id vienen en None — se resuelven en tiempo de ejecucion con get_all_types() y con la tabla de correspondencia asset_id_canonical -> ID de OpenPages (pendiente, ver README). Los nombres de campo en FIELD_MAP_VULNERABILITY / FIELD_MAP_ASSET (openpages_mapper.py) son provisionales y deben confirmarse contra el esquema real de produccion de Actinver, no el de demo.",
+  "assets": [
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-4af90e10eaca",
+      "name": "100mxl0081ghb.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl0081ghb.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "192.168.237.7"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows, Windows 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-27930fbe1af0",
+      "name": "100mxl134267m.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl134267m.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "192.168.223.18"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows, Windows 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-3bbf37eb3b0a",
+      "name": "100mxl137479x.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl137479x.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.1.10.94"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows, Windows 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-26ba78a40431",
+      "name": "100mxl8412436.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl8412436.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "192.168.227.38"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows, Windows 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-22e06d618745",
+      "name": "100mxl84727800.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl84727800.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.1.10.54"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows, Windows 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Srv.Correo\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Srv.ALLPCI for PCI DSS\"},{\"category\":\"SI\",\"value\":\"01.ALL\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-d8c92e5d9bac",
+      "name": "28bcpjc3wny.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "28bcpjc3wny.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "172.16.96.240"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Windows 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.SWIFT\"},{\"category\":\"ST\",\"value\":\"01.Estaciones de Trabajo\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-b2a9f4ae00b3",
+      "name": "alt780cb.alt780cb.com",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "alt780cb.alt780cb.com"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "172.16.99.146"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "IBMi OS V7R4M0"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-3382fc550a28",
+      "name": "fixdbprod1.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "fixdbprod1.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "198.150.0.15"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "IBM AIX 6.1"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.Autorizador\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-cfe64295bb9b",
+      "name": "s01bcesbpn01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.1.17"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.x on CentOS"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"SI\",\"value\":\"PCI\"},{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.PCI\"},{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.Autorizador\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-aa873e16293d",
+      "name": "s01bcesbpn02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.1.18"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.x on CentOS"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-576fc4442e6c",
+      "name": "s01beappfepn01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01beappfepn01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.1.31"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"SI\",\"value\":\"PCI\"},{\"category\":\"01.TELECOM\",\"value\":\"01.TLC.PCI\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Srv.ALLPCI for PCI DSS\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-eb5a5b06ca32",
+      "name": "s01beappfepn02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01beappfepn02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.1.32"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"},{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.Red Financiera\"},{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.INDEVAL\"},{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.INDEVAL\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-7f4162f3bf90",
+      "name": "s01hubfspn01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01hubfspn01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.110.88"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2012 R2 Standard Build 9600"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"SI\",\"value\":\"PCI\"},{\"category\":\"01.TELECOM\",\"value\":\"01.TLC.PCI\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Srv.ALLPCI for PCI DSS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-9e578c8aafa6",
+      "name": "s01pvtaappvm01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.114.14"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-74c5409180c7",
+      "name": "s01pvtaappvm02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.114.15"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-3a3bbf0e8566",
+      "name": "s01pvtaappvm03.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm03.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.114.16"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Banco Linux\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.Banca Electronica\"},{\"category\":\"SI\",\"value\":\"01.ALL\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-5fa66f511721",
+      "name": "s01pvtaappvm04.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm04.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.114.17"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Banco Linux\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.Banca Electronica\"},{\"category\":\"SI\",\"value\":\"01.ALL\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-24a085bf0756",
+      "name": "s01pvtaappvm05.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm05.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.114.24"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-f1680fe954b5",
+      "name": "v1plctrlm01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1plctrlm01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.4.79"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-fecefa8c119e",
+      "name": "v1plofapp01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1plofapp01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.3.168"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-06545aa540c5",
+      "name": "v1plprobatch02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1plprobatch02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.2.41"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "RICOH Printer"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"ST\",\"value\":\"01.Normatividad\"},{\"category\":\"Casa de Bolsa Windows\",\"value\":\"Casa de Bolsa Windows\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.Hub de Pagos\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Banco Windows\"},{\"category\":\"Servidores Banco Windows\",\"value\":\"Windows\"},{\"category\":\"01.Servidores\",\"value\":\"01.SRV.SWIFT\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Casa de Bolsa Windows\"},{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.ALL.SWIFT\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-cd1eddbc1904",
+      "name": "v1plsapagas02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1plsapagas02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.4.94"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"ST\",\"value\":\"01.Normatividad\"},{\"category\":\"Casa de Bolsa Windows\",\"value\":\"Casa de Bolsa Windows\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.Hub de Pagos\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Banco Windows\"},{\"category\":\"Servidores Banco Windows\",\"value\":\"Windows\"},{\"category\":\"01.Servidores\",\"value\":\"01.SRV.SWIFT\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Casa de Bolsa Windows\"},{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.ALL.SWIFT\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-db00ca2d4040",
+      "name": "v1poracoaszs02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1poracoaszs02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "192.168.226.6"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "IBM AIX 7.3"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-f0863e2b4998",
+      "name": "v1pox9hv02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pox9hv02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.206.204"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Debian 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-1113793f6d15",
+      "name": "v1pwexmbx03.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwexmbx03.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.1.50, 192.168.12.3, 10.14.9.120"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2016 Standard Build 14393"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.BUS Central\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-3bf708360638",
+      "name": "v1pwgfin01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwgfin01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.3.7"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2016 Standard Build 14393"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.BUS Central\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-db41b2c9198c",
+      "name": "v1pwintdb01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwintdb01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.1.23"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2012 R2 Standard"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.BUS Central\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-035e25f8b3bf",
+      "name": "v1pwjtcs01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwjtcs01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.4.101"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2019 Standard Build 17763"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.BUS Central\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-e2fb6f8fa6c0",
+      "name": "v1pwrepueap02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwrepueap02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.44.12"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2016 Standard Build 14393"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.DRP\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-7d1e8fa5335e",
+      "name": "v1pwsrmapp02.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwsrmapp02.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.14.9.17"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Debian 11"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-2ec920a32f9f",
+      "name": "v2clcoaspei01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v2clcoaspei01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.133.81"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"SI\",\"value\":\"PCI\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Srv.ALLPCI for PCI DSS\"},{\"category\":\"01.TELECOM\",\"value\":\"01.TLC.PCI\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-4a4eab8d828a",
+      "name": "v2drwservpci02.actinverpci.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v2drwservpci02.actinverpci.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "192.168.215.5"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2016 Standard Build 14393"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"Servidores Banco Linux\",\"value\":\"Linux Banco\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-c5107e734931",
+      "name": "v2pwsqlh01.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v2pwsqlh01.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.13.10.16, 10.14.9.112, 10.13.2.48"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Windows Server 2016 Standard Build 14393"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.BUS Central\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-75b0890dee88",
+      "name": "v3zlexa-dlibt1.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v3zlexa-dlibt1.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.11.10.18"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Oracle Exadata"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.SRV.BUS Central\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-105d508aaab5",
+      "name": "v4zlexa-qlibt1.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v4zlexa-qlibt1.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.12.10.15"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Oracle Exadata"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Estaciones\",\"value\":\"01.CRT.PCs.SIBUC\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-f9e63bb37f40",
+      "name": "v4zlexa-qlibt2.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "v4zlexa-qlibt2.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.12.10.17"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Oracle Exadata"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.KPIs Banco AIX\"},{\"category\":\"SI\",\"value\":\"01.ALL\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.ACT.JOYAS\"},{\"category\":\"01.Infraestructura\",\"value\":\"01.CRT.INF.ALL.SPEI\"},{\"category\":\"ST\",\"value\":\"01.Normatividad\"},{\"category\":\"01.Base de Datos\",\"value\":\"01.BD.SPEI\"},{\"category\":\"Servidores Banco AIX\",\"value\":\"Banco AIX\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-532febcbda21",
+      "name": "vtpoaccion2k.actinver.com.mx",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "vtpoaccion2k.actinver.com.mx"
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "172.16.3.8"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "IBMi OS V7R4M0"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-879979c9faf7",
+      "name": "10.10.202.36",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": null
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.202.36"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-0b574926c244",
+      "name": "10.10.202.41",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": null
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.202.41"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 2.6"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-3e553f73557a",
+      "name": "10.60.40.254",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": null
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.40.254"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 3.x on Ubuntu"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-525e8b5ac7a5",
+      "name": "10.60.6.254",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": null
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.6.254"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "F5 Networks BIG-IP"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-7223dfae7eeb",
+      "name": "10.60.54.254",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": null
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.54.254"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "F5 Networks BIG-IP"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "nan"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "_asset_id_canonical": "AST-cbdd22d722e4",
+      "name": "10.60.3.254",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": null
+        },
+        {
+          "name": "IPv4 Address",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.3.254"
+        },
+        {
+          "name": "Operating System",
+          "data_type": "STRING_TYPE",
+          "value": "Linux Kernel 3.x on CentOS Linux"
+        },
+        {
+          "name": "Tags",
+          "data_type": "STRING_TYPE",
+          "value": "[{\"category\":\"01.Infraestructura\",\"value\":\"01.Act.Prod\"}]"
+        }
+      ]
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-4af90e10eaca",
+      "name": "VUL_AST-4af90e10eaca_3389",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-4af90e10eaca_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl0081ghb.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : CN=100MXL0081GHB.actinver.com.mx\n|-Issuer  : CN=100MXL0081GHB.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-27930fbe1af0",
+      "name": "VUL_AST-27930fbe1af0_3389",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-27930fbe1af0_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl134267m.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : CN=10046SPW54.actinver.com.mx\n|-Issuer  : CN=10046SPW54.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-3bbf37eb3b0a",
+      "name": "VUL_AST-3bbf37eb3b0a_3389",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-3bbf37eb3b0a_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl137479x.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : CN=1009WHC674.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-26ba78a40431",
+      "name": "VUL_AST-26ba78a40431_3389",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-26ba78a40431_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl8412436.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : CN=100MXL0081G7X.actinver.com.mx\n|-Issuer  : CN=100MXL0081G7X.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-22e06d618745",
+      "name": "VUL_AST-22e06d618745_3389",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-22e06d618745_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "100mxl84727800.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : CN=100CX37974.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-d8c92e5d9bac",
+      "name": "VUL_AST-d8c92e5d9bac_3389",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-d8c92e5d9bac_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "28bcpjc3wny.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : CN=28BCPJC3WNY.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-b2a9f4ae00b3",
+      "name": "VUL_AST-b2a9f4ae00b3_9476",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-b2a9f4ae00b3_9476"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 9476
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "alt780cb.alt780cb.com"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=MX/ST=Ciudad de MÂexico/L=Ciudad de Mexico/O=Actinver, S.A. de C.V./OU=Actinver/CN=actinver-ACTSFEAD802-TN-DRP\n|-Issuer  : C=MX/ST=Ciudad de MÂexico/L=Ciudad de Mexico/O=Actinver, S.A. de C.V./OU=Actinver/CN=actinver-ACTSFEAD802-TN-DRP\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-3382fc550a28",
+      "name": "VUL_AST-3382fc550a28_5336",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-3382fc550a28_5336"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 5336
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "fixdbprod1.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : C=US/ST=TX/L=Austin/O=IBM/OU=STG/CN=www.ibm.com\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-cfe64295bb9b",
+      "name": "VUL_AST-cfe64295bb9b_43222",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Expiry",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-cfe64295bb9b_43222"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Expiry"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 43222
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe SSL certificate has already expired :\n\n  Subject          : C=MX, ST=Distri Federal, L=Mexico, O=Actinver Casa de Bolsa S.A. de C.V., OU=Sistemas, CN=s01bcesbpn01.actinver.com.mx, emailAddress=seginfo@actinver.com.mx\n  Issuer           : CN=actinver-ACTSFEAD802-CA\n  Not valid before : Jul 17 19:17:58 2018 GMT\n  Not valid after  : Jul 17 19:27:58 2020 GMT\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-cfe64295bb9b",
+      "name": "VUL_AST-cfe64295bb9b_40279",
+      "description": "Carga automatizada desde Tenable — TLS Version 1.1 Deprecated Protocol",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-cfe64295bb9b_40279"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "TLS Version 1.1 Deprecated Protocol"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 40279
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "TLSv1.1 is enabled and the server supports at least one cipher."
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-aa873e16293d",
+      "name": "VUL_AST-aa873e16293d_41272",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-aa873e16293d_41272"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 41272
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was part of the certificate chain\nsent by the remote host, but it has expired :\n\n|-Subject   : C=MX/ST=Distri Federal/L=Mexico/O=Actinver Casa de Bolsa S.A. de C.V./OU=Sistemas/CN=s01bcesbpn01.actinver.com.mx/E=seginfo@actinver.com.mx\n|-Not After : Jul 17 19:27:58 2020 GMT\n\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=MX/ST=Distri Federal/L=Mexico/O=Actinver Casa de Bolsa S.A. de C.V./OU=Sistemas/CN=s01bcesbpn01.actinver.com.mx/E=seginfo@actinver.com.mx\n|-Issuer  : DC=mx/DC=com/DC=actinver/CN=actinver-ACTSFEAD802-CA\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-aa873e16293d",
+      "name": "VUL_AST-aa873e16293d_42222",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-aa873e16293d_42222"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 42222
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was part of the certificate chain\nsent by the remote host, but it has expired :\n\n|-Subject   : C=MX/ST=Distri Federal/L=Mexico/O=Actinver Casa de Bolsa S.A. de C.V./OU=Sistemas/CN=s01bcesbpn01.actinver.com.mx/E=seginfo@actinver.com.mx\n|-Not After : Jul 17 19:27:58 2020 GMT\n\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=MX/ST=Distri Federal/L=Mexico/O=Actinver Casa de Bolsa S.A. de C.V./OU=Sistemas/CN=s01bcesbpn01.actinver.com.mx/E=seginfo@actinver.com.mx\n|-Issuer  : DC=mx/DC=com/DC=actinver/CN=actinver-ACTSFEAD802-CA\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-aa873e16293d",
+      "name": "VUL_AST-aa873e16293d_40275",
+      "description": "Carga automatizada desde Tenable — SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-aa873e16293d_40275"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 40275
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nNessus determined that the remote server supports SSLv3 with at least one CBC \ncipher suite, indicating that this server is vulnerable.\n\nIt appears that TLSv1 or newer is supported on the server. However, the \nFallback SCSV mechanism is not supported, allowing connections to be \"rolled \nback\" to SSLv3.\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-aa873e16293d",
+      "name": "VUL_AST-aa873e16293d_43283",
+      "description": "Carga automatizada desde Tenable — TLS Version 1.1 Deprecated Protocol",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-aa873e16293d_43283"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "TLS Version 1.1 Deprecated Protocol"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 43283
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01bcesbpn02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "TLSv1.1 is enabled and the server supports at least one cipher."
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-576fc4442e6c",
+      "name": "VUL_AST-576fc4442e6c_10083",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Signed Using Weak Hashing Algorithm",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-576fc4442e6c_10083"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Signed Using Weak Hashing Algorithm"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 10083
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01beappfepn01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificates were part of the certificate chain sent by\nthe remote host, but contain hashes that are considered to be weak.\n\nSubject             : C=US/O=IBM/OU=NodeBEBURSANET/OU=CellBEBURSANET/OU=Root Certificate/CN=S01BEAPPFEPN01\nSignature Algorithm : SHA-1 With RSA Encryption\nValid From          : May 05 11:22:12 2015 GMT\nValid To            : May 01 11:22:12 2030 GMT\nRaw PEM certificate : \n-----BEGIN CERTIFICATE-----\nMIIEDTCCAvWgAwIBAgIGdjrmeG2/MA0GCSqGSIb3DQEBBQUAMIGBMQswCQYDVQQGEwJVUzEMMAoGA1UEChMDSUJNMRcwFQYDVQQLEw5Ob2RlQkVCVVJTQU5FVDEXMBUGA1UECxMOQ2VsbEJFQlVSU0FORVQxGTAXBgNVBAsTEFJvb3QgQ2VydGlmaWNhdGUxFzAVBgNVBAMTDlMwMUJFQVBQRkVQTjAxMB4XDTE1MDUwNTExMjIxMloXDTMwMDUwMTExMjIxMlowgYExCzAJBgNVBAYTAlVTMQwwCgYDVQQKEwNJQk0xFzAVBgNVBAsTDk5vZGVCRUJVUlNBTkVUMRcwFQYDVQQLEw5DZWxsQkVCVVJTQU5FVDEZMBcGA1UECxMQUm9vdCBDZXJ0aWZpY2F0ZTEXMBUGA1UEAxMOUzAxQkVBUFBGRVBOMDEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCowyuKlW7yUc/4AlcuAM2s1n0TZ2yci7Ww057M8731CVrIq6pS4bCls0PEVtnqTvCO+ZRVUB48C8U9PdS+c4i6gGYUzshMjx9i5q7KYEwrQDFCwjXqZOTTkYLb539yVWuTri93diJoQsqbaz5qfurp9aWkY1pdbUHpiQLpVvv9bXooKElAyKm/5K8XdhBC9QMWTMJajWiUvLTJu9c3QyoFQRME4AHCfWX4L1F6MwNG+IdzHEGFNOG5x+7/tY7T8/KfrYR5ywrTU7V4XKo2c0rY6nI0PjvcGKXzeog7bYk4lI+c0dCS2fLtm3n8yFWLPRpjJ6uXClQIcdN3bkktnvLxAgMBAAGjgYgwgYUwDwYDVR0TAQH/BAUwAwEB/zBfBgNVHREEWDBWgVRQcm9maWxlVVVJRDpETUdSX0JFX0JVUlNBTkVULURFUExPWU1FTlRfTUFOQUdFUi04MGU2YTczMS05MDc2LTRhZDYtOGVlYy1kNzEzMTY3OGI1ZTkwEQYDVR0OBAoECEXjErL2MWyZMA0GCSqGSIb3DQEBBQUAA4IBAQCCgM+i6oFpea12y8GmefHQ/hTtSe4d4VaXv+4XVroDVghAsV7Ny7DWsFBUX65ncZwyiEU7FL+08j7M6hVDqIHmCAvjV+RwS2BGrFr/c/otlepnUD45+aZGowAKCdSZqJeLjkDe0E4w6ogXaCMZPo4KcKiXLkrtYha2kvKm7K2d2tjA1UEWM5f0ktv5PE86mo53NaDMuBFz5eYhwZpOhMI630/p+28Q94GQ5XGg0GBjyo+hYAZnMyPoXhlO4IRlmwjgxKd/gxN4Y2I94xcVeKNV8Iag2+F46zUyUtxmcsRFe/YuImUoGZFkwZWORy2DjxSwh9tlkVHgk5RWWv49YdeF\n-----END CERTIFICATE-----\n\nSubject             : C=US/O=IBM/OU=N01BEBURSANET/OU=CellNEGELEC01/CN=S01BEAPPFEPN01\nSignature Algorithm : SHA-1 With RSA Encryption\nValid From          : Apr 19 02:30:31 2026 GMT\nValid To            : Apr 19 02:30:31 2027 GMT\nRaw PEM certificate : \n-----BEGIN CERTIFICATE-----\nMIID3jCCAsagAwIBAgIIAOADkYbNgcwwDQYJKoZIhvcNAQEFBQAwgYExCzAJBgNVBAYTAlVTMQwwCgYDVQQKEwNJQk0xFzAVBgNVBAsTDk5vZGVCRUJVUlNBTkVUMRcwFQYDVQQLEw5DZWxsQkVCVVJTQU5FVDEZMBcGA1UECxMQUm9vdCBDZXJ0aWZpY2F0ZTEXMBUGA1UEAxMOUzAxQkVBUFBGRVBOMDEwHhcNMjYwNDE5MDIzMDMxWhcNMjcwNDE5MDIzMDMxWjBkMQswCQYDVQQGEwJVUzEMMAoGA1UEChMDSUJNMRYwFAYDVQQLEw1OMDFCRUJVUlNBTkVUMRYwFAYDVQQLEw1DZWxsTkVHRUxFQzAxMRcwFQYDVQQDEw5TMDFCRUFQUEZFUE4wMTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAILnsqcFb3NdzXw/rhkizzXXim5TNC9s8qRcEm0E0Oi5RlK8nQWnPqkFOBuCsRmAnC9SDpKsGddd3rO2OqTEA5PV2u8G2/SVQvK7JzbpY2kN5tdmx4UxKY4CBbN9r+5ZAG3eBfUCZ2qJ14nbPU/rSRBYtPu3Gnh9rU3NH3/7eGqIZ0ZCp0GWMaak3iqQu31A1z3NfhkVfKTWae6Uw1Bau8RNfDZw229pTr8OOOQqYZ8wLSl5+V/UvtJZZbFMXW41+ZX8Oqkz4ufevSMpW6g83vgRtP10UdscL8dzIw7ubF5lufYq163h0X3ATPXbu3ICaqPvvJIvSbvTphKD4rF2HR0CAwEAAaN2MHQwXwYDVR0RBFgwVoFUUHJvZmlsZVVVSUQ6RE1HUl9CRV9CVVJTQU5FVC1ERVBMT1lNRU5UX01BTkFHRVItODBlNmE3MzEtOTA3Ni00YWQ2LThlZWMtZDcxMzE2NzhiNWU5MBEGA1UdDgQKBAhHmJ4lqKjWCjANBgkqhkiG9w0BAQUFAAOCAQEAS4lZ5Yie9Y8N9VHKJX+avPyGJ0sEMW1+yhHkeKSqjsyAMGOOOZgJ7aOafOEQN3seN/SHPBV0G9mGal5PmBbH5A1BNCo2oWm230zXNn69efGAazv9e1Orn4ccreXdlXrIzkNyarZw2zyHSciQTo27cpZXMpEveeR+o0JLur/fHwZFomozlMkCjVP/OKAZ+BIM9EycC+B1s4AG+xK9VHuQXJ2rYoZvlaUf+LFURE9GzCGS5jTVXjY6RXb+qN06VLMIRiHGzMo649D54bok69zqeZpj5lXNQxsZtlE9lO/11SWgHn+8zJ7eBc1Wvdqsnil5D9TBMOwlzar6PkDpwG5tnQ==\n-----END CERTIFICATE-----\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-576fc4442e6c",
+      "name": "VUL_AST-576fc4442e6c_10064",
+      "description": "Carga automatizada desde Tenable — SSL Version 2 and 3 Protocol Detection",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-576fc4442e6c_10064"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Version 2 and 3 Protocol Detection"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 10064
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01beappfepn01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\n- SSLv3 is enabled and the server supports at least one cipher.\n\tExplanation: TLS 1.0 and SSL 3.0 cipher suites may be used with SSLv3\n\n\n  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)\n\n    Name                          Code             KEX           Auth     Encryption             MAC\n    ----------------------        ----------       ---           ----     ---------------------  ---\n    DES-CBC3-SHA(FIPS)                             RSA           RSA      3DES-CBC(168)          SHA1\n    EDH-RSA-DES-CBC3-SHA                           DHE           RSA      3DES-CBC(168)          SHA1\n    DES-CBC3-SHA                                   RSA           RSA      3DES-CBC(168)          SHA1\n\n  High Strength Ciphers (>= 112-bit key)\n\n    Name                          Code             KEX           Auth     Encryption             MAC\n    ----------------------        ----------       ---           ----     ---------------------  ---\n    DHE-RSA-AES128-SHA                             DHE           RSA      AES-CBC(128)           SHA1\n    DHE-RSA-AES256-SHA                             DHE           RSA      AES-CBC(256)           SHA1\n    AES128-SHA                                     RSA           RSA      AES-CBC(128)           SHA1\n    AES256-SHA                                     RSA           RSA      AES-CBC(256)           SHA1\n    RC4-MD5                                        RSA           RSA      RC4(128)               MD5\n    RC4-SHA                                        RSA           RSA      RC4(128)               SHA1\n\nThe fields above are :\n\n  {Tenable ciphername}\n  {Cipher ID code}\n  Kex={key exchange}\n  Auth={authentication}\n  Encrypt={symmetric encryption method}\n  MAC={message authentication code}\n  {export flag}\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-eb5a5b06ca32",
+      "name": "VUL_AST-eb5a5b06ca32_10074",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-eb5a5b06ca32_10074"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 10074
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01beappfepn02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=US/O=IBM/OU=NodeBEBURSANET/OU=CellBEBURSANET/OU=Root Certificate/CN=S01BEAPPFEPN01\n|-Issuer  : C=US/O=IBM/OU=NodeBEBURSANET/OU=CellBEBURSANET/OU=Root Certificate/CN=S01BEAPPFEPN01\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-7f4162f3bf90",
+      "name": "VUL_AST-7f4162f3bf90_445",
+      "description": "Carga automatizada desde Tenable — KB5046682: Windows Server 2012 R2 Security Update (November 2024)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-7f4162f3bf90_445"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "KB5046682: Windows Server 2012 R2 Security Update (November 2024)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 445
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01hubfspn01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe remote host is missing one of the following rollup KBs : \n  - 5046682\n\n  - C:\\Windows\\system32\\ntoskrnl.exe has not been patched.\n    Remote version : 6.3.9600.21620\n    Should be      : 6.3.9600.22265\n\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-7f4162f3bf90",
+      "name": "VUL_AST-7f4162f3bf90_445",
+      "description": "Carga automatizada desde Tenable — Oracle Java SE Multiple Vulnerabilities (January 2026 CPU)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-7f4162f3bf90_445"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "Oracle Java SE Multiple Vulnerabilities (January 2026 CPU)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 445
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01hubfspn01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\n  Path              : C:\\Program Files\\Java\\jre1.8.0_251\\\n  Installed version : 8.0.251.8 / build 8.0.251\n  Fixed version     : Upgrade to version 8.0.481 or greater\n\n\n\n  Path              : C:\\Program Files (x86)\\Java\\jre1.8.0_45\\\n  Installed version : 8.0.45.15 / build 8.0.45\n  Fixed version     : Upgrade to version 8.0.481 or greater\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-9e578c8aafa6",
+      "name": "VUL_AST-9e578c8aafa6_9403",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-9e578c8aafa6_9403"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 9403
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=US/O=IBM/OU=NodeProdVista/OU=CellProdVista/OU=Root Certificate/CN=S01PVTAAPPVM01\n|-Issuer  : C=US/O=IBM/OU=NodeProdVista/OU=CellProdVista/OU=Root Certificate/CN=S01PVTAAPPVM01\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-74c5409180c7",
+      "name": "VUL_AST-74c5409180c7_11004",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-74c5409180c7_11004"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 11004
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : C=US/O=IBM/OU=NodeProdVista/OU=CellProdVista/OU=Root Certificate/CN=S01PVTAAPPVM01\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-3a3bbf0e8566",
+      "name": "VUL_AST-3a3bbf0e8566_9048",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-3a3bbf0e8566_9048"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 9048
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm03.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=US/O=IBM/OU=NodeProdWS/OU=CellProdWS/OU=Root Certificate/CN=S01PVTAAPPVM03\n|-Issuer  : C=US/O=IBM/OU=NodeProdWS/OU=CellProdWS/OU=Root Certificate/CN=S01PVTAAPPVM03\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-5fa66f511721",
+      "name": "VUL_AST-5fa66f511721_9048",
+      "description": "Carga automatizada desde Tenable — SSL RC4 Cipher Suites Supported (Bar Mitzvah)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-5fa66f511721_9048"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL RC4 Cipher Suites Supported (Bar Mitzvah)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 9048
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm04.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nList of RC4 cipher suites supported by the remote server :\n\n  High Strength Ciphers (>= 112-bit key)\n\n    Name                          Code             KEX           Auth     Encryption             MAC\n    ----------------------        ----------       ---           ----     ---------------------  ---\n    RC4-MD5                       0x00, 0x04       RSA           RSA      RC4(128)               MD5\n    RC4-SHA                       0x00, 0x05       RSA           RSA      RC4(128)               SHA1\n\nThe fields above are :\n\n  {Tenable ciphername}\n  {Cipher ID code}\n  Kex={key exchange}\n  Auth={authentication}\n  Encrypt={symmetric encryption method}\n  MAC={message authentication code}\n  {export flag}\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-5fa66f511721",
+      "name": "VUL_AST-5fa66f511721_9357",
+      "description": "Carga automatizada desde Tenable — SSL Version 2 and 3 Protocol Detection",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-5fa66f511721_9357"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Version 2 and 3 Protocol Detection"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 9357
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm04.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\n- SSLv3 is enabled and the server supports at least one cipher.\n\tExplanation: TLS 1.0 and SSL 3.0 cipher suites may be used with SSLv3\n\n\n  Medium Strength Ciphers (> 64-bit and < 112-bit key, or 3DES)\n\n    Name                          Code             KEX           Auth     Encryption             MAC\n    ----------------------        ----------       ---           ----     ---------------------  ---\n    DES-CBC3-SHA(FIPS)                             RSA           RSA      3DES-CBC(168)          SHA1\n    EDH-RSA-DES-CBC3-SHA                           DHE           RSA      3DES-CBC(168)          SHA1\n    DES-CBC3-SHA                                   RSA           RSA      3DES-CBC(168)          SHA1\n\n  High Strength Ciphers (>= 112-bit key)\n\n    Name                          Code             KEX           Auth     Encryption             MAC\n    ----------------------        ----------       ---           ----     ---------------------  ---\n    DHE-RSA-AES128-SHA                             DHE           RSA      AES-CBC(128)           SHA1\n    AES128-SHA                                     RSA           RSA      AES-CBC(128)           SHA1\n    RC4-MD5                                        RSA           RSA      RC4(128)               MD5\n    RC4-SHA                                        RSA           RSA      RC4(128)               SHA1\n\nThe fields above are :\n\n  {Tenable ciphername}\n  {Cipher ID code}\n  Kex={key exchange}\n  Auth={authentication}\n  Encrypt={symmetric encryption method}\n  MAC={message authentication code}\n  {export flag}\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-24a085bf0756",
+      "name": "VUL_AST-24a085bf0756_8886",
+      "description": "Carga automatizada desde Tenable — SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-24a085bf0756_8886"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 8886
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "s01pvtaappvm05.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nNessus determined that the remote server supports SSLv3 with at least one CBC \ncipher suite, indicating that this server is vulnerable.\n\nIt appears that TLSv1 or newer is supported on the server. However, the \nFallback SCSV mechanism is not supported, allowing connections to be \"rolled \nback\" to SSLv3.\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-f1680fe954b5",
+      "name": "VUL_AST-f1680fe954b5_8446",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-f1680fe954b5_8446"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 8446
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1plctrlm01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : C=NA/ST=CTMDemo/L=CTMDemo/O=CTM Demo/OU=BMC CTMDemo CA/CN=BMC Control-M Root CA v1plctrlm01\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-fecefa8c119e",
+      "name": "VUL_AST-fecefa8c119e_6250",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-fecefa8c119e_6250"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 6250
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1plofapp01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : C=US/ST=CA/L=REDWOODSHORES/O=ORACLE/OU=OAS/CN=Self-Signed Certificate for EBS_web_OHS1 \n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-06545aa540c5",
+      "name": "VUL_AST-06545aa540c5_7443",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-06545aa540c5_7443"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 7443
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1plprobatch02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was part of the certificate chain\nsent by the remote host, but it has expired :\n\n|-Subject   : C=MX/ST=CDMX/L=CDMX/O=Actinver/OU=Infraestructura/CN=*.actinver.com.mx\n|-Not After : Nov 02 22:05:10 2025 GMT\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-cd1eddbc1904",
+      "name": "VUL_AST-cd1eddbc1904_50014",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-cd1eddbc1904_50014"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 50014
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1plsapagas02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=DE/O=SAP Trust Community/OU=SAP Web AS/OU=I0020882762/CN=*.mydomain.com\n|-Issuer  : C=DE/O=SAP Trust Community/OU=SAP Web AS/OU=I0020882762/CN=*.mydomain.com\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-db00ca2d4040",
+      "name": "VUL_AST-db00ca2d4040_1503",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-db00ca2d4040_1503"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 1503
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1poracoaszs02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : CN=TUL_V1PORACOASZS02_MONTH\n|-Issuer  : CN=TUL_V1PORACOASZS02_MONTH\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-f0863e2b4998",
+      "name": "VUL_AST-f0863e2b4998_6100",
+      "description": "Carga automatizada desde Tenable — Python Unsupported Version Detection",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-f0863e2b4998_6100"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "Python Unsupported Version Detection"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 6100
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pox9hv02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following Python installation is unsupported :\n\n  Path              : /\n  Port              : 6100\n  Installed version : 3.6.8\n  Latest version    : 3.10\n  Support dates     : 2021-12-23 (end of life)\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-1113793f6d15",
+      "name": "VUL_AST-1113793f6d15_5693",
+      "description": "Carga automatizada desde Tenable — HSTS Missing From HTTPS Server (RFC 6797)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-1113793f6d15_5693"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "HSTS Missing From HTTPS Server (RFC 6797)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 5693
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwexmbx03.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nHTTP/1.1 302 FOUND\n\nContent-Type: text/html; charset=utf-8\nContent-Length: 219\nLocation: https://V1PWEXMBX03.actinver.com.mx:5693/login\nSet-Cookie: session=eyJyZWRpcmVjdCI6Imh0dHBzOi8vVjFQV0VYTUJYMDMuYWN0aW52ZXIuY29tLm14OjU2OTMvIn0.HRCJng.UD_RfaAlYC49Ap-AK20pNRpYlTw; HttpOnly; Path=/\nDate: Sun, 14 Jun 2026 18:51:10 GMT\n\n\nThe remote HTTPS server does not send the HTTP\n\"Strict-Transport-Security\" header.\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-3bf708360638",
+      "name": "VUL_AST-3bf708360638_1203",
+      "description": "Carga automatizada desde Tenable — Web Server Allows Password Auto-Completion",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-3bf708360638_1203"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "Web Server Allows Password Auto-Completion"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 1203
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwgfin01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "Page : /login\nDestination Page: /Home/signIn\n\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-db41b2c9198c",
+      "name": "VUL_AST-db41b2c9198c_3389",
+      "description": "Carga automatizada desde Tenable — SSL/TLS Diffie-Hellman Modulus <= 1024 Bits (Logjam)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-db41b2c9198c_3389"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL/TLS Diffie-Hellman Modulus <= 1024 Bits (Logjam)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3389
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwintdb01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Low"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nVulnerable connection combinations :\n\n  SSL/TLS version  : TLSv1.0\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_128_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.0\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_256_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.0\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_128_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.0\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_256_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.0\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_128_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.0\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_256_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.1\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_128_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.1\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_256_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.1\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_128_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.1\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_256_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.1\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_128_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n\n  SSL/TLS version  : TLSv1.1\n  Cipher suite     : TLS1_DHE_RSA_WITH_AES_256_CBC_SHA\n  Diffie-Hellman MODP size (bits) : 1024\n    Warning - This is a known static Oakley Group2 modulus. This may make\n    the remote host more vulnerable to the Logjam attack.\n  Logjam attack difficulty : Hard (would require nation-state resources)\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-035e25f8b3bf",
+      "name": "VUL_AST-035e25f8b3bf_5986",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Expiry",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-035e25f8b3bf_5986"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Expiry"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 5986
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwjtcs01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe SSL certificate has already expired :\n\n  Subject          : CN=Computers, CN=V1PWJTCS01\n  Issuer           : CN=actinver-ACTSFEAD802-CA\n  Not valid before : May 23 05:00:21 2023 GMT\n  Not valid after  : May 22 05:00:21 2025 GMT\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-e2fb6f8fa6c0",
+      "name": "VUL_AST-e2fb6f8fa6c0_1501",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-e2fb6f8fa6c0_1501"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 1501
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwrepueap02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : CN=TUL_V1PWREPUEAP02_WEEK\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-7d1e8fa5335e",
+      "name": "VUL_AST-7d1e8fa5335e_22",
+      "description": "Carga automatizada desde Tenable — OpenSSH < 9.6 Multiple Vulnerabilities",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-7d1e8fa5335e_22"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "OpenSSH < 9.6 Multiple Vulnerabilities"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 22
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v1pwsrmapp02.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\n  Version source    : SSH-2.0-OpenSSH_7.8\n  Installed version : 7.8\n  Fixed version     : 9.6p1 / 9.6\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-2ec920a32f9f",
+      "name": "VUL_AST-2ec920a32f9f_8443",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Expiry",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-2ec920a32f9f_8443"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Expiry"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 8443
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v2clcoaspei01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe SSL certificate has already expired :\n\n  Subject          : C=MX, ST=CDMX, L=Mexico, O=Actinver Casa de Bolsa S.A. de C.V., OU=Sistemas, CN=v2clcoaspei01.actinver.com.mx, emailAddress=act_as@actinver.com.mx\n  Issuer           : CN=actinver-ACTSFEAD802-CA\n  Not valid before : Mar 23 21:55:45 2023 GMT\n  Not valid after  : Mar 22 21:55:45 2025 GMT\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-4a4eab8d828a",
+      "name": "VUL_AST-4a4eab8d828a_445",
+      "description": "Carga automatizada desde Tenable — Microsoft Edge (Chromium) < 148.0.3967.70 Multiple Vulnerabilities",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-4a4eab8d828a_445"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "Microsoft Edge (Chromium) < 148.0.3967.70 Multiple Vulnerabilities"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 445
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v2drwservpci02.actinverpci.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "High"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\n  Path              : C:\\Program Files (x86)\\Microsoft\\Edge\\Application\n  Installed version : 131.0.2903.51\n  Fixed version     : 148.0.3967.70\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-c5107e734931",
+      "name": "VUL_AST-c5107e734931_1757",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-c5107e734931_1757"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 1757
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v2pwsqlh01.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : CN=TUL_V2PWSQLH01_SQL_YEAR\n|-Issuer  : CN=TUL_V2PWSQLH01_SQL_YEAR\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-75b0890dee88",
+      "name": "VUL_AST-75b0890dee88_7879",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-75b0890dee88_7879"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 7879
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v3zlexa-dlibt1.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : CN=localhost/OU=Oracle Exadata/O=Oracle Corporation/L=Redwood City/ST=California/C=US\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-105d508aaab5",
+      "name": "VUL_AST-105d508aaab5_7879",
+      "description": "Carga automatizada desde Tenable — SSL Self-Signed Certificate",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-105d508aaab5_7879"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Self-Signed Certificate"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 7879
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v4zlexa-qlibt1.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was found at the top of the certificate\nchain sent by the remote host, but is self-signed and was not\nfound in the list of known certificate authorities :\n\n|-Subject : CN=localhost/OU=Oracle Exadata/O=Oracle Corporation/L=Redwood City/ST=California/C=US\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-f9e63bb37f40",
+      "name": "VUL_AST-f9e63bb37f40_3872",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-f9e63bb37f40_3872"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 3872
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "v4zlexa-qlibt2.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : O=EnterpriseManager on v1ploem.actinver.com.mx/OU=EnterpriseManager on v1ploem.actinver.com.mx/L=EnterpriseManager on v1ploem.actinver.com.mx/ST=CA/C=US/CN=v1ploem.actinver.com.mx\n|-Issuer  : O=EnterpriseManager on v1ploem.actinver.com.mx/OU=EnterpriseManager on v1ploem.actinver.com.mx/L=EnterpriseManager on v1ploem.actinver.com.mx/ST=CA/C=US/CN=v1ploem.actinver.com.mx\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-532febcbda21",
+      "name": "VUL_AST-532febcbda21_9473",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-532febcbda21_9473"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 9473
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "vtpoaccion2k.actinver.com.mx"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=MX/ST=Ciudad de MÂexico/L=Ciudad de Mexico/O=Actinver, S.A. de C.V./OU=Actinver/CN=actinver-ACTSFEAD802-TN1\n|-Issuer  : C=MX/ST=Ciudad de MÂexico/L=Ciudad de Mexico/O=Actinver, S.A. de C.V./OU=Actinver/CN=actinver-ACTSFEAD802-TN1\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-879979c9faf7",
+      "name": "VUL_AST-879979c9faf7_22",
+      "description": "Carga automatizada desde Tenable — SSH Terrapin Prefix Truncation Weakness (CVE-2023-48795)",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-879979c9faf7_22"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSH Terrapin Prefix Truncation Weakness (CVE-2023-48795)"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 22
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.202.36"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "Supports following ChaCha20-Poly1305 Client to Server algorithm : aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes256-cbc,aes128-gcm@openssh.com,aes128-ctr,aes128-cbc\nSupports following CBC Client to Server algorithm               : aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes256-cbc,aes128-gcm@openssh.com,aes128-ctr,aes128-cbc\nSupports following Encrypt-then-MAC Client to Server algorithm  : hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512\nSupports following ChaCha20-Poly1305 Server to Client algorithm : aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes256-cbc,aes128-gcm@openssh.com,aes128-ctr,aes128-cbc\nSupports following CBC Server to Client algorithm               : aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes256-cbc,aes128-gcm@openssh.com,aes128-ctr,aes128-cbc\nSupports following Encrypt-then-MAC Server to Client algorithm  : hmac-sha2-256-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha2-256,hmac-sha1,umac-128@openssh.com,hmac-sha2-512\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-0b574926c244",
+      "name": "VUL_AST-0b574926c244_30000",
+      "description": "Carga automatizada desde Tenable — SSL Certificate Cannot Be Trusted",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-0b574926c244_30000"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate Cannot Be Trusted"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 30000
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "10.10.202.41"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe following certificate was at the top of the certificate\nchain sent by the remote host, but it is signed by an unknown\ncertificate authority :\n\n|-Subject : C=IN/ST=New York/L=Endicott/O=IBM/CN=        -            \n|-Issuer  : C=IN/ST=New York/L=Endicott/O=IBM/CN=        -            \n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-3e553f73557a",
+      "name": "VUL_AST-3e553f73557a_8082",
+      "description": "Carga automatizada desde Tenable — SSL Certificate with Wrong Hostname",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-3e553f73557a_8082"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate with Wrong Hostname"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 8082
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.40.254"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe identity known by Nessus is :\n\n  \n  10.60.40.254\n\nThe Common Name in the certificate is :\n\n  securelogin.arubanetworks.com\n\nThe Subject Alternate Name in the certificate is :\n\n  securelogin.arubanetworks.com\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-525e8b5ac7a5",
+      "name": "VUL_AST-525e8b5ac7a5_8081",
+      "description": "Carga automatizada desde Tenable — SSL Certificate with Wrong Hostname",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-525e8b5ac7a5_8081"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate with Wrong Hostname"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 8081
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.6.254"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe identity known by Nessus is :\n\n  \n  10.60.6.254\n\nThe Common Name in the certificate is :\n\n  securelogin.arubanetworks.com\n\nThe Subject Alternate Name in the certificate is :\n\n  securelogin.arubanetworks.com\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-7223dfae7eeb",
+      "name": "VUL_AST-7223dfae7eeb_8082",
+      "description": "Carga automatizada desde Tenable — SSL Certificate with Wrong Hostname",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-7223dfae7eeb_8082"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate with Wrong Hostname"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 8082
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.54.254"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe identity known by Nessus is :\n\n  \n  10.60.54.254\n\nThe Common Name in the certificate is :\n\n  securelogin.arubanetworks.com\n\nThe Subject Alternate Name in the certificate is :\n\n  securelogin.arubanetworks.com\n"
+        }
+      ]
+    },
+    {
+      "type_definition_id": null,
+      "primary_parent_id": null,
+      "_pending_asset_lookup": "AST-cbdd22d722e4",
+      "name": "VUL_AST-cbdd22d722e4_443",
+      "description": "Carga automatizada desde Tenable — SSL Certificate with Wrong Hostname",
+      "fields": [
+        {
+          "name": "Name",
+          "data_type": "STRING_TYPE",
+          "value": "VUL_AST-cbdd22d722e4_443"
+        },
+        {
+          "name": "Description",
+          "data_type": "STRING_TYPE",
+          "value": "SSL Certificate with Wrong Hostname"
+        },
+        {
+          "name": "External System - Application Vulnerability:Port",
+          "data_type": "INTEGER_TYPE",
+          "value": 443
+        },
+        {
+          "name": "External System - Application Vulnerability:Domain",
+          "data_type": "STRING_TYPE",
+          "value": "10.60.3.254"
+        },
+        {
+          "name": "Demo-Vulner:Risk Rating",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Severity",
+          "data_type": "MULTI_VALUE_ENUM",
+          "value": {
+            "name": "Medium"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Status",
+          "data_type": "ENUM_TYPE",
+          "value": {
+            "name": "Open"
+          }
+        },
+        {
+          "name": "External System - Application Vulnerability:Issue Type",
+          "data_type": "STRING_TYPE",
+          "value": "'\nThe identity known by Nessus is :\n\n  \n  10.60.3.254\n\nThe Common Name in the certificate is :\n\n  securelogin.arubanetworks.com\n\nThe Subject Alternate Name in the certificate is :\n\n  securelogin.arubanetworks.com\n"
+        }
+      ]
+    }
+  ]
+}
