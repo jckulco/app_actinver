@@ -172,6 +172,22 @@ objetos de prueba creados con el esquema viejo y limpiar sus entradas del
 mapping, permitiendo que se recrearan limpios con el esquema nuevo — ya
 validado end-to-end (API + UI) contra la instancia real.
 
+**De dónde sale cada pieza del `name`** (ej.
+`VUL_AST-4af90e10eaca_3389_bb4caef8`, tal como se ve en la UI de OpenPages)
+— ninguna de estas piezas existe como texto literal en el Excel limpio, se
+arman en tiempo de ejecución dentro de `build_vulnerability_payloads`:
+
+| Pieza | De dónde sale |
+|---|---|
+| `VUL_` | Prefijo literal fijo en el código (de "**VUL**nerability"), solo para que el nombre se distinga a simple vista de un Asset (que usa el prefijo `AST-`) al verlo en el grid de OpenPages. |
+| `AST-4af90e10eaca` | Columna `asset_id_canonical` del Excel limpio (generada por `clean_engine.py`: hash SHA-256 corto del hostname/IP del activo). |
+| `3389` | Columna `port` del Excel limpio, tal cual. |
+| `bb4caef8` | `hashlib.sha256(definition.name).hexdigest()[:8]` — hash de 8 caracteres sobre la columna `definition.name` (ej. `"SSL Certificate Cannot Be Trusted"`). Es lo que agregó el fix de esta sección; antes el `name` no incluía este hash y por eso colisionaba. |
+
+Es decir: activo + puerto + huella digital de a qué vulnerabilidad
+específica corresponde, para poder leer el nombre en el grid sin tener que
+abrir el registro.
+
 ### Carga real a OpenPages (`load_to_openpages.py`)
 
 Script separado (no forma parte de la app Streamlit ni de su Dockerfile)
@@ -211,6 +227,30 @@ replicando el patrón ya existente para `Vulnerability`. Esto es un cambio
 de configuración de la instancia, no de los scripts: si se apunta el
 loader a una instancia nueva (ej. producción de Actinver), hay que
 verificar que el tipo `Asset` tenga Views equivalentes ahí también.
+
+### Acceso directo a la UI de OpenPages (grids de Asset2 y Vulnerability)
+
+Los tipos `Asset` (label `Asset2`) y `Vulnerability` **no están enlazados
+a ninguna entrada del menú de navegación estándar** ("IT Governance" en el
+menú solo tiene entradas para otros tipos — "Assets" ahí navega al tipo
+genérico `Resource`, que trae ~345 registros de demo sin relación con este
+proyecto, y "IT Systems" navega al tipo `RiskEntity`, tampoco relacionado).
+Para ver los datos reales cargados por este pipeline hay que usar las URLs
+directas al grid, construidas con el `Name` técnico real del tipo (no el
+label que se ve en pantalla):
+
+- **Assets2**: `http://na4.services.cloud.techzone.ibm.com:47373/openpages/app/jspview/react/grc/grid/Asset?objectTypeName=Asset`
+- **Vulnerabilities**: `http://na4.services.cloud.techzone.ibm.com:47373/openpages/app/jspview/react/grc/grid/Vulnerability?objectTypeName=Vulnerability`
+
+Ambas confirmadas funcionando (muestran los registros reales cargados por
+`load_to_openpages.py`, incluyendo campos de CVE/CVSS/Joya de la Corona y
+la relación `primary_parent_id` correcta). Recomendable guardarlas como
+favoritos del navegador mientras no se resuelva el pendiente de abajo.
+
+Pendiente de configuración (no bloquea la carga, pero conviene resolverlo
+para que el equipo de GRC no tenga que usar URLs directas): enlazar el tipo
+`Asset`/Asset2 y `Vulnerability` a una entrada visible del menú de
+navegación "IT Governance", igual que ya lo están otros tipos.
 
 ## Archivo de entrada opcional: listado de Joyas de la Corona
 
@@ -330,6 +370,11 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
 - [ ] Confirmar si el objeto Vulnerability de ITG ya está habilitado en la
   instancia **productiva** de Actinver (depende del licenciamiento/
   configuración activa) — la instancia de prueba TechZone ya lo tiene.
+- [ ] Enlazar los tipos `Asset`/Asset2 y `Vulnerability` a una entrada
+  visible del menú de navegación "IT Governance" — hoy solo son accesibles
+  vía URL directa (ver sección "Acceso directo a la UI de OpenPages" más
+  arriba). No bloquea la carga, pero el equipo de GRC no debería depender
+  de URLs manuales para uso diario.
 - [ ] Validar el mapeo de severidad Tenable (5 niveles) → OpenPages (3
   niveles, confirmado por API en la instancia de prueba) con el equipo de
   GRC — ver `SEVERITY_MAP` en `openpages_mapper.py`.
