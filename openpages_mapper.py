@@ -3,20 +3,34 @@ Mapeo del archivo limpio de vulnerabilidades (clean_engine.CleanResult.clean_df)
 al modelo de datos de IBM OpenPages, en formato de payloads JSON listos para
 POST a /openpages/api/v2/contents (mismo patrón que ejemplo_carga.py).
 
-IMPORTANTE — dos objetos, no uno:
-  - Vulnerability: los campos observados en objetos.json (categoría con
-    prefijo "Demo-Vulner:") corresponden a una categoría de EJEMPLO/DEMO de
-    OpenPages, no necesariamente a la categoría personalizada real de
-    Actinver. Por eso todos los nombres de campo viven en las constantes
-    de abajo (FIELD_MAP_VULNERABILITY) — un solo lugar para actualizar
-    cuando se confirme el esquema real de producción.
-  - Asset/System: host_name / ipv4 / operating_system NO son campos de
-    Vulnerability, viven en el objeto Asset/System, relacionado vía
-    "primary_parent_id". Aún no tenemos el ID real de esos activos en
-    OpenPages (pendiente: tabla de correspondencia asset_id_canonical <->
-    ID de OpenPages, ver README). Por eso "primary_parent_id" se deja como
-    placeholder (None) y se incluye "_pending_asset_lookup" con la clave
-    que hay que resolver antes de enviar a la API.
+ACTUALIZADO — esquema real confirmado contra la instancia OpenPages 9.2
+(na4.services.cloud.techzone.ibm.com), vía Object Types export + API /types:
+
+  - Vulnerability (name tecnico "Vulnerability", type_definition_id=127) tiene
+    tres grupos de campos coexistiendo: Demo-Vulner:*, External System -
+    Application Vulnerability:*, OPSS-Vuln:*. Los dos primeros SI estan
+    poblados con datos reales en esta instancia y se usan aqui. OPSS-Vuln
+    no se vio poblado, se deja fuera por ahora.
+  - El objeto padre real de Vulnerability es "Asset2" — name tecnico real
+    es "Asset" pero label/plural son "Asset2"/"Assets2" (type_definition_id
+    =136). NO es el objeto "Asset" plano (Criticality/Resource Type/etc.)
+    que se exporto primero por FastMap — ese es un tipo distinto sin
+    relacion directa con Vulnerability.
+  - "Tenable" ya fue agregado como valor valido del enum
+    Demo-Vulner:Scanning Vendor en esta instancia (confirmado).
+  - Severidad: External System - Application Vulnerability:Severity solo
+    acepta High/Medium/Low (confirmado por API) -> SEVERITY_MAP colapsa
+    Critical->High e Info->Low, que es correcto para ese campo.
+
+Sigue pendiente antes de una carga real:
+  - Confirmar type_definition_id vigente vía get_all_types() en el momento
+    de la carga (no hardcodear un ID viejo si la instancia se reconstruye).
+  - Validar con GRC si prefieren usar Demo-Vulner:Severity Rating (escala
+    1-5, mapea 1:1 con los 5 niveles de Tenable) en vez de/ademas de
+    External System:Severity (3 niveles).
+  - Construir la tabla de correspondencia asset_id_canonical -> ID real de
+    Asset2 en OpenPages (sigue usando el mismo mecanismo de
+    _pending_asset_lookup / _asset_id_canonical de antes).
 
 Uso:
     from openpages_mapper import build_vulnerability_payloads, build_asset_payloads
@@ -28,44 +42,91 @@ import json
 import pandas as pd
 
 # ---------------------------------------------------------------------------
-# CONSTANTES EDITABLES — ajustar aquí cuando se confirme el esquema real de
-# producción de Actinver (vía plantilla FastMap o un query de objetos.json
-# contra el ambiente productivo, no el de demo).
+# CONSTANTES EDITABLES
 # ---------------------------------------------------------------------------
 
 TYPE_NAME_VULNERABILITY = "Vulnerability"
-TYPE_NAME_ASSET = "Asset/System"
+TYPE_NAME_ASSET = "Asset"  # name tecnico real; label en la UI es "Asset2"
 
-# Campo -> nombre de campo en OpenPages (Vulnerability)
+# Campo -> nombre de campo real en OpenPages (Vulnerability)
 FIELD_MAP_VULNERABILITY = {
+    # Base
     "name": "Name",
     "description": "Description",
+    # Demo-Vulner (seccion "Assessment" en la UI)
     "cve": "Demo-Vulner:CVE ID",
-    "risk_rating": "Demo-Vulner:Risk Rating",
+    "risk_rating": "Demo-Vulner:Risk Rating",              # ENUM: Warning, Low, Medium, High
+    "severity_rating_1_5": "Demo-Vulner:Severity Rating",   # ENUM: '1'..'5'
+    "status_demo": "Demo-Vulner:Status",                    # ENUM: Open, Closed
+    "type": "Demo-Vulner:Type",                             # ENUM: Hardware, Software, Personnel, Network, Site, Organization
+    "scanning_vendor": "Demo-Vulner:Scanning Vendor",       # ENUM: AppScan, McAfee, Qualys, Tenable
+    "assessment_method": "Demo-Vulner:Assessment Method",
+    "qid": "Demo-Vulner:QID",
+    # External System - Application Vulnerability (seccion "Vulnerability Scan Details")
     "port": "External System - Application Vulnerability:Port",
     "domain_or_host": "External System - Application Vulnerability:Domain",
-    "severity_multi_enum": "External System - Application Vulnerability:Severity",
+    "severity_multi_enum": "External System - Application Vulnerability:Severity",  # High/Medium/Low
     "status": "External System - Application Vulnerability:Status",
     "scan_output": "External System - Application Vulnerability:Issue Type",
+    "path": "External System - Application Vulnerability:Path",
 }
 
-# Campo -> nombre de campo en OpenPages (Asset/System) — NOMBRES PROVISIONALES,
-# no confirmados contra el esquema real (no tenemos aún la plantilla FastMap
-# de Asset/System). Ajustar en cuanto se reciba.
+# Valores validos por campo ENUM, para validar antes de mandar el POST real.
+VULNERABILITY_ENUM_VALUES = {
+    "Demo-Vulner:Risk Rating": ["Warning", "Low", "Medium", "High"],
+    "Demo-Vulner:Severity Rating": ["1", "2", "3", "4", "5"],
+    "Demo-Vulner:Status": ["Open", "Closed"],
+    "Demo-Vulner:Type": ["Hardware", "Software", "Personnel", "Network", "Site", "Organization"],
+    "Demo-Vulner:Scanning Vendor": ["AppScan", "McAfee", "Qualys", "Tenable"],
+    "External System - Application Vulnerability:Severity": ["High", "Medium", "Low"],
+    "External System - Application Vulnerability:Status": [
+        "New", "Open", "In Progress", "In Review", "Noise", "Past", "Fixed", "Close",
+    ],
+}
+
+# Campo -> nombre de campo real en OpenPages (Asset2 / name tecnico "Asset")
 FIELD_MAP_ASSET = {
     "host_name": "Name",
-    "ipv4": "IPv4 Address",
-    "operating_system": "Operating System",
-    "tags": "Tags",
+    "ipv4": "Demo-Asset:IP Address",
+    "operating_system": "Demo-Asset:Operating System",
+    "tags": "Demo-Asset:Tags",
+    "asset_type": "Demo-Asset:Asset Type",           # ENUM: Desktops, Servers, Networks
+    "confidentiality": "Demo-Asset:Confidentiality", # ENUM: High, Medium, Low
+    "managed_state": "Demo-Asset:Managed State",     # ENUM: Managed, Unmanaged
 }
 
-# Tenable (5 niveles) -> OpenPages Risk/Severity (3 niveles observados: High/Medium/Low)
+ASSET_ENUM_VALUES = {
+    "Demo-Asset:Asset Type": ["Desktops", "Servers", "Networks"],
+    "Demo-Asset:Confidentiality": ["High", "Medium", "Low"],
+    "Demo-Asset:Managed State": ["Managed", "Unmanaged"],
+}
+
+# type_definition_id conocidos de esta instancia (verificar de nuevo con
+# get_all_types() antes de una carga real — pueden cambiar si la instancia
+# se reconstruye).
+KNOWN_TYPE_IDS = {
+    TYPE_NAME_VULNERABILITY: "127",
+    TYPE_NAME_ASSET: "136",
+}
+
+# Tenable (5 niveles) -> External System:Severity (3 niveles, confirmado
+# contra el enum real de esta instancia).
 SEVERITY_MAP = {
     "Critical": "High",
     "High": "High",
     "Medium": "Medium",
     "Low": "Low",
     "Info": "Low",
+}
+
+# Tenable (5 niveles) -> Demo-Vulner:Severity Rating (escala 1-5, alternativa
+# sin perdida de granularidad; usar si GRC prefiere esta escala).
+SEVERITY_RATING_MAP = {
+    "Critical": "5",
+    "High": "4",
+    "Medium": "3",
+    "Low": "2",
+    "Info": "1",
 }
 
 
@@ -77,6 +138,10 @@ def _severity_openpages(tenable_severity):
     return SEVERITY_MAP.get(str(tenable_severity), "Low")
 
 
+def _severity_rating_openpages(tenable_severity):
+    return SEVERITY_RATING_MAP.get(str(tenable_severity), "1")
+
+
 def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por fila del Excel limpio, listo para
     POST /openpages/api/v2/contents (con type_definition_id y
@@ -85,9 +150,10 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
     payloads = []
     for _, row in clean_df.iterrows():
         vuln_name = f"VUL_{row['asset_id_canonical']}_{row['port']}"
+        severity_op = _severity_openpages(row["severity"])
         payload = {
             "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_VULNERABILITY)
-            "primary_parent_id": None,   # ID del Asset/System en OpenPages — ver _pending_asset_lookup
+            "primary_parent_id": None,   # ID del Asset2 en OpenPages — ver _pending_asset_lookup
             "_pending_asset_lookup": row["asset_id_canonical"],
             "name": vuln_name,
             "description": f"Carga automatizada desde Tenable — {row['definition.name']}",
@@ -100,10 +166,12 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
                     "STRING_TYPE",
                     str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
                 ),
-                _field(fm["risk_rating"], "ENUM_TYPE", {"name": _severity_openpages(row["severity"])}),
-                _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", {"name": _severity_openpages(row["severity"])}),
+                _field(fm["risk_rating"], "ENUM_TYPE", {"name": severity_op}),
+                _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", {"name": severity_op}),
                 _field(fm["status"], "ENUM_TYPE", {"name": "Open"}),
+                _field(fm["status_demo"], "ENUM_TYPE", {"name": "Open"}),
                 _field(fm["scan_output"], "STRING_TYPE", str(row.get("output", ""))),
+                _field(fm["scanning_vendor"], "ENUM_TYPE", {"name": "Tenable"}),
             ],
         }
         payloads.append(payload)
@@ -112,7 +180,7 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
 
 def build_asset_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por activo único (asset_id_canonical) para el
-    objeto Asset/System. Nombres de campo PROVISIONALES (ver FIELD_MAP_ASSET).
+    objeto Asset2 (name técnico "Asset", ver FIELD_MAP_ASSET).
     primary_parent_id no aplica aquí (es el objeto padre); se usa
     asset_id_canonical como clave de negocio temporal hasta tener la tabla
     de correspondencia con el ID real de OpenPages."""
@@ -141,13 +209,13 @@ def build_openpages_export(clean_df: pd.DataFrame) -> dict:
     ejemplo_carga.py para el patrón de POST real)."""
     return {
         "_notas": (
-            "type_definition_id y primary_parent_id vienen en None — se "
-            "resuelven en tiempo de ejecucion con get_all_types() y con la "
-            "tabla de correspondencia asset_id_canonical -> ID de OpenPages "
-            "(pendiente, ver README). Los nombres de campo en "
-            "FIELD_MAP_VULNERABILITY / FIELD_MAP_ASSET (openpages_mapper.py) "
-            "son provisionales y deben confirmarse contra el esquema real "
-            "de produccion de Actinver, no el de demo."
+            "Esquema confirmado contra la instancia real (Object Types export + "
+            "API /types): Vulnerability id=127, Asset2 (name tecnico 'Asset') "
+            "id=136. type_definition_id y primary_parent_id vienen en None -- "
+            "se resuelven en tiempo de ejecucion con get_all_types() y con la "
+            "tabla de correspondencia asset_id_canonical -> ID real de Asset2 "
+            "(pendiente, ver README). Verificar KNOWN_TYPE_IDS contra "
+            "get_all_types() antes de cargar, por si la instancia cambio."
         ),
         "assets": build_asset_payloads(clean_df),
         "vulnerabilities": build_vulnerability_payloads(clean_df),
