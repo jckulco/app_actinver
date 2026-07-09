@@ -22,29 +22,36 @@ ACTUALIZADO — esquema real confirmado contra la instancia OpenPages 9.2
     acepta High/Medium/Low (confirmado por API) -> SEVERITY_MAP colapsa
     Critical->High e Info->Low, que es correcto para ese campo.
 
-CORREGIDO EN ESTA SESION — formato real del payload esperado por la API v2
-(confirmado contra el "GRC REST API V1 Reference Guide" de IBM, secciones
-/types y /contents). Esta es la causa mas probable del error 400 con el
-que quedo bloqueada la sesion anterior:
-
-  - Las claves de nivel superior del objeto van en camelCase, NO snake_case:
-    "typeDefinitionId" (no "type_definition_id"), "primaryParentId" (no
-    "primary_parent_id"). El payload anterior mandaba las claves en
-    snake_case, que la API simplemente no reconoce como sus atributos
-    reales -> por eso terminaba tratando todo como campos de sistema
-    desconocidos ("fieldId: null is read only").
-  - "fields" NO es un array plano. Es un objeto contenedor con una sola
-    clave "field" que sí es el array:
+CORREGIDO (sesion anterior) — formato real del nivel superior del payload:
+  - Claves raiz en camelCase: "typeDefinitionId" (no "type_definition_id"),
+    "primaryParentId" (no "primary_parent_id").
+  - "fields" es un objeto contenedor, no un array plano:
         "fields": { "field": [ {...}, {...} ] }
-    en vez de:
-        "fields": [ {...}, {...} ]
-  - Cada elemento de ese array usa la clave "dataType" (camelCase), no
+  - Cada elemento del array usa la clave "dataType" (camelCase), no
     "data_type".
-  - Confirmado en el PDF (pág. 17, ejemplo de creacion de Action Item): el
-    "typeDefinitionId" en el POST a /contents es el MISMO id (o name) que
-    devuelve /types -- no requiere resolverse vía un endpoint separado de
-    profiles/templates como se especulo en la sesion anterior. Esa
-    hipotesis queda descartada.
+  - Confirmado en el PDF (pág. 17): "typeDefinitionId" es el mismo id/name
+    que devuelve /types -- no requiere un endpoint de profiles/templates.
+
+CORREGIDO EN ESTA SESION — segundo bug de formato, esta vez a nivel de cada
+campo individual (confirmado contra el PDF, pág. 20-21, sección "Updating a
+GRC Object"). El helper _field() anterior mandaba TODOS los campos con la
+clave "value", incluidos los ENUM_TYPE y MULTI_VALUE_ENUM. Eso es correcto
+solo para STRING_TYPE/INTEGER_TYPE/FLOAT_TYPE/BOOLEAN_TYPE/DATE_TYPE, pero
+NO para los tipos enum, que usan claves distintas:
+
+  - ENUM_TYPE            -> clave "enumValue": {"name": "..."}
+                             (NO "value": {"name": "..."})
+  - MULTI_VALUE_ENUM      -> clave "multiEnumValue": {"enumValue": [ {...} ]}
+                             -- SIEMPRE un array, incluso con un solo valor
+                             (NO "value": {"name": "..."})
+  - Todo lo demas (STRING_TYPE, INTEGER_TYPE, FLOAT_TYPE, BOOLEAN_TYPE,
+    DATE_TYPE, CURRENCY_TYPE) -> clave "value": <valor plano>
+
+_field() ahora arma la clave correcta segun el data_type recibido. Los
+campos afectados en nuestro mapeo eran: Demo-Vulner:Risk Rating,
+Demo-Vulner:Status, Demo-Vulner:Scanning Vendor,
+External System...:Status (ENUM_TYPE), y External System...:Severity
+(MULTI_VALUE_ENUM).
 
 Sigue pendiente antes de una carga real:
   - Confirmar type_definition_id vigente vía get_all_types() en el momento
@@ -155,22 +162,51 @@ SEVERITY_RATING_MAP = {
     "Info": "1",
 }
 
+# data_type que la API representa como enumValue (un solo objeto {"name": ...})
+_SINGLE_ENUM_TYPES = {"ENUM_TYPE"}
+# data_type que la API representa como multiEnumValue: {"enumValue": [...]}
+_MULTI_ENUM_TYPES = {"MULTI_VALUE_ENUM"}
+
 
 def _field(name, data_type, value):
-    """Construye un elemento de campo en el formato real de la API v2:
-    clave "dataType" en camelCase (NO "data_type"). Este dict va dentro
-    del array "field" anidado bajo "fields" (ver _wrap_fields)."""
-    return {"name": name, "dataType": data_type, "value": value}
+    """Construye un elemento de campo en el formato real de la API v2.
+
+    - Para ENUM_TYPE: la clave del valor es "enumValue" y su contenido es
+      un solo dict, p.ej. {"name": "Medium"}.
+    - Para MULTI_VALUE_ENUM: la clave del valor es "multiEnumValue" y su
+      contenido es {"enumValue": [ {"name": "..."} , ... ]} -- SIEMPRE un
+      array, aunque solo se mande un valor.
+    - Para cualquier otro data_type (STRING_TYPE, INTEGER_TYPE, FLOAT_TYPE,
+      BOOLEAN_TYPE, DATE_TYPE, CURRENCY_TYPE): la clave es "value" con el
+      valor tal cual se recibe.
+
+    `value` para los casos enum puede pasarse como:
+      - un dict {"name": "..."} (un solo valor), o
+      - una lista de dicts [{"name": "..."}, ...] (varios valores, solo
+        tiene sentido para MULTI_VALUE_ENUM).
+    """
+    field_obj = {"name": name, "dataType": data_type}
+
+    if data_type in _SINGLE_ENUM_TYPES:
+        # value debe ser un solo dict {"name": ...}; si por error llega una
+        # lista de un elemento, tomamos el primero.
+        enum_val = value[0] if isinstance(value, list) else value
+        field_obj["enumValue"] = enum_val
+    elif data_type in _MULTI_ENUM_TYPES:
+        # Normalizamos siempre a lista, aunque nos pasen un solo dict.
+        enum_list = value if isinstance(value, list) else [value]
+        field_obj["multiEnumValue"] = {"enumValue": enum_list}
+    else:
+        field_obj["value"] = value
+
+    return field_obj
 
 
 def _wrap_fields(field_list):
     """Envuelve una lista de campos en el contenedor real que espera la
     API: "fields": {"field": [...]}. Confirmado contra los ejemplos
     oficiales del GRC REST API Reference Guide (secciones /contents,
-    "Updating a GRC Object"). Un array plano bajo "fields" NO es
-    reconocido por la API y es la causa mas probable del error
-    'fieldId : null is read only and cannot be changed.' visto en la
-    sesion anterior."""
+    "Updating a GRC Object")."""
     return {"field": field_list}
 
 
@@ -205,7 +241,7 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
                 str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
             ),
             _field(fm["risk_rating"], "ENUM_TYPE", {"name": severity_op}),
-            _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", {"name": severity_op}),
+            _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", [{"name": severity_op}]),
             _field(fm["status"], "ENUM_TYPE", {"name": "Open"}),
             _field(fm["status_demo"], "ENUM_TYPE", {"name": "Open"}),
             _field(fm["scan_output"], "STRING_TYPE", str(row.get("output", ""))),
@@ -232,7 +268,14 @@ def build_asset_payloads(clean_df: pd.DataFrame) -> list:
 
     NOTA: "_asset_id_canonical" es un campo AUXILIAR nuestro (no de la
     API) que load_to_openpages.py usa para construir la tabla de
-    correspondencia y luego debe eliminar del payload antes del POST."""
+    correspondencia y luego debe eliminar del payload antes del POST.
+
+    Nota: los campos de Asset en este mapeo (host_name, ipv4,
+    operating_system, tags) son todos STRING_TYPE, asi que no se ven
+    afectados por el bug de enumValue/multiEnumValue corregido en esta
+    sesion. Si en el futuro se agregan asset_type / confidentiality /
+    managed_state (que si son ENUM_TYPE segun ASSET_ENUM_VALUES), ya
+    quedaran bien formados automaticamente por _field()."""
     fm = FIELD_MAP_ASSET
     assets = clean_df.drop_duplicates(subset="asset_id_canonical")
     payloads = []
@@ -266,10 +309,12 @@ def build_openpages_export(clean_df: pd.DataFrame) -> dict:
             "tabla de correspondencia asset_id_canonical -> ID real de Asset2 "
             "(pendiente, ver README). Verificar KNOWN_TYPE_IDS contra "
             "get_all_types() antes de cargar, por si la instancia cambio. "
-            "FORMATO DE PAYLOAD CORREGIDO en esta version: claves raiz en "
-            "camelCase (typeDefinitionId, primaryParentId) y 'fields' "
-            "envuelto como {'field': [...]}, con 'dataType' (no 'data_type') "
-            "en cada campo -- ver comentarios al inicio del archivo."
+            "FORMATO DE PAYLOAD CORREGIDO: claves raiz en camelCase "
+            "(typeDefinitionId, primaryParentId), 'fields' envuelto como "
+            "{'field': [...]}, 'dataType' (no 'data_type') en cada campo, y "
+            "ENUM_TYPE/MULTI_VALUE_ENUM usan 'enumValue'/'multiEnumValue' "
+            "en vez de 'value' generico -- ver comentarios al inicio del "
+            "archivo."
         ),
         "assets": build_asset_payloads(clean_df),
         "vulnerabilities": build_vulnerability_payloads(clean_df),
