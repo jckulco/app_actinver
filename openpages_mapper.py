@@ -58,6 +58,23 @@ En la V2 real:
     vimos en corridas anteriores eran sintomas de este desajuste de
     esquema (V1 vs V2), no de otro bug adicional.
 
+CORREGIDO EN ESTA SESION (2) — CAUSA RAIZ REAL de "fieldId : null is read
+only and cannot be changed.", el mismo error 400 que persistio identico a
+traves de TRES formatos de payload distintos (lo cual ya era una pista de
+que no era un problema de formato general, sino de un campo puntual mal
+incluido). El ejemplo oficial de creacion v2 NUNCA incluye "Name" ni
+"Description" dentro del array "fields" -- esos van EXCLUSIVAMENTE como
+atributos de nivel superior del payload ("name", "description"). Nuestro
+mapeo, en cambio, SIEMPRE agrego ademas un field llamado "Name" (y en
+Vulnerability tambien uno llamado "Description"), duplicando el atributo.
+"Name"/"Description" son atributos de sistema reservados: cuando se
+mandan tambien como field, la API no les puede resolver un fieldId real
+(porque no son "campos" normales de la definicion de tipo) y responde que
+ese fieldId (null) es de solo lectura. Se eliminaron esas entradas de
+build_vulnerability_payloads()/build_asset_payloads(); FIELD_MAP_* las deja
+solo como referencia documentada, ya no se usan para construir field
+entries.
+
 Sigue pendiente antes de una carga real:
   - Confirmar type_definition_id vigente vía get_all_types() en el momento
     de la carga (no hardcodear un ID viejo si la instancia se reconstruye).
@@ -87,8 +104,16 @@ TYPE_NAME_VULNERABILITY = "Vulnerability"
 TYPE_NAME_ASSET = "Asset"  # name tecnico real; label en la UI es "Asset2"
 
 # Campo -> nombre de campo real en OpenPages (Vulnerability)
+# NOTA: "name" y "description" se dejan aqui solo como referencia/documentacion
+# -- YA NO se usan para construir entradas dentro de "fields". Son atributos
+# de sistema que la API v2 espera exclusivamente en el nivel superior del
+# payload ("name"/"description"), NUNCA como field. Incluirlos tambien como
+# field (como se hacia antes) hacia que la API no pudiera resolverles un
+# fieldId real y respondiera "fieldId : null is read only and cannot be
+# changed." -- esa fue la causa raiz real del error 400 que persistio a
+# traves de varios intentos de arreglo de formato.
 FIELD_MAP_VULNERABILITY = {
-    # Base
+    # Base -- NO enviar como field, ver nota arriba
     "name": "Name",
     "description": "Description",
     # Demo-Vulner (seccion "Assessment" en la UI)
@@ -123,8 +148,11 @@ VULNERABILITY_ENUM_VALUES = {
 }
 
 # Campo -> nombre de campo real en OpenPages (Asset2 / name tecnico "Asset")
+# NOTA: "host_name" (-> "Name") se deja aqui solo como referencia -- YA NO se
+# usa para construir una entrada dentro de "fields". Ver nota equivalente en
+# FIELD_MAP_VULNERABILITY sobre por que "Name" nunca debe ir como field.
 FIELD_MAP_ASSET = {
-    "host_name": "Name",
+    "host_name": "Name",  # NO enviar como field, ver nota arriba
     "ipv4": "Demo-Asset:IP Address",
     "operating_system": "Demo-Asset:Operating System",
     "tags": "Demo-Asset:Tags",
@@ -237,8 +265,6 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
         vuln_name = f"VUL_{row['asset_id_canonical']}_{row['port']}"
         severity_op = _severity_openpages(row["severity"])
         field_list = [
-            _field(fm["name"], vuln_name),
-            _field(fm["description"], str(row["definition.name"])),
             _field(fm["port"], int(row["port"]) if pd.notna(row["port"]) else None),
             _field(
                 fm["domain_or_host"],
@@ -278,7 +304,6 @@ def build_asset_payloads(clean_df: pd.DataFrame) -> list:
     payloads = []
     for _, row in assets.iterrows():
         field_list = [
-            _field(fm["host_name"], str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else None),
             _field(fm["ipv4"], str(row["asset.ipv4_addresses"])),
             _field(fm["operating_system"], str(row["asset.operating_system"])),
             _field(fm["tags"], str(row.get("asset.tags", ""))),
