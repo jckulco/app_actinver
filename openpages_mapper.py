@@ -87,6 +87,18 @@ Sigue pendiente antes de una carga real:
     siguen siendo campos auxiliares NUESTROS que load_to_openpages.py debe
     remover del payload antes del POST; no son parte del esquema de la API).
 
+CORREGIDO EN ESTA SESION (3) — con los 2 Assets ya creandose de verdad
+(confirmado con una carga real), la Vulnerability fallo especificamente en
+el campo MULTI_VALUE_ENUM (External System...:Severity) con un error 400
+MUY explicito del backend:
+    "Unrecognized field \"value\" (class
+    com.ibm.openpages.api.grc.rest.model.v2.MultiEnumFieldType), not
+    marked as ignorable (3 known properties: \"values\", \"id\", \"name\")"
+Es decir: para MULTI_VALUE_ENUM la clave real NO es "value" (que si es
+correcta para ENUM_TYPE y el resto), sino "values" (plural). _field() ya
+decide automaticamente la clave correcta segun si el campo esta en
+_MULTI_ENUM_FIELDS.
+
 Uso:
     from openpages_mapper import build_vulnerability_payloads, build_asset_payloads
 
@@ -216,14 +228,20 @@ SEVERITY_RATING_MAP = {
 
 
 def _field(name, value):
-    """Construye un elemento de campo en el formato REAL de la API v2:
-    simplemente {"name": ..., "value": ...}. No existe "dataType" ni
-    "enumValue"/"multiEnumValue" en el payload de creacion/actualizacion --
-    la API resuelve el tipo internamente por el nombre/id del campo.
+    """Construye un elemento de campo en el formato REAL de la API v2.
 
-    El llamador es responsable de darle a `value` la forma correcta segun
-    el tipo del campo (ver _enum_value / _multi_enum_value)."""
-    return {"name": name, "value": value}
+    Confirmado con una carga real: para la mayoria de los campos es
+    simplemente {"name": ..., "value": ...}. PERO para campos
+    MULTI_VALUE_ENUM (ver _MULTI_ENUM_FIELDS) la clase Java del backend
+    (com.ibm.openpages.api.grc.rest.model.v2.MultiEnumFieldType) NO
+    reconoce "value" -- espera la clave "values" (plural). El error real
+    devuelto por la API fue:
+        "Unrecognized field \"value\" (class ...MultiEnumFieldType), not
+        marked as ignorable (3 known properties: \"values\", \"id\", \"name\")"
+    Por eso este helper decide la clave segun si el nombre de campo esta
+    en _MULTI_ENUM_FIELDS, en vez de usar siempre "value"."""
+    key = "values" if name in _MULTI_ENUM_FIELDS else "value"
+    return {"name": name, key: value}
 
 
 def _plain_or_enum_value(field_name, raw_value):
