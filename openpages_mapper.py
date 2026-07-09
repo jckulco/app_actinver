@@ -106,6 +106,7 @@ Uso:
     asset_payloads = build_asset_payloads(clean_df)
 """
 import json
+import hashlib
 import pandas as pd
 
 # ---------------------------------------------------------------------------
@@ -294,7 +295,19 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
     fm = FIELD_MAP_VULNERABILITY
     payloads = []
     for _, row in clean_df.iterrows():
-        vuln_name = f"VUL_{row['asset_id_canonical']}_{row['port']}"
+        # BUGFIX: antes el name era solo VUL_{asset}_{port}. Un mismo activo
+        # puede tener MAS de una vulnerabilidad distinta en el mismo puerto
+        # (ej. dos hallazgos separados de Tenable sobre el 445/SMB) -- en
+        # ese caso colisionaban en el mismo name, y como
+        # load_to_openpages.py usa "name" como clave de deduplicacion
+        # (vuln_id_mapping.json), la segunda vulnerabilidad se omitia
+        # silenciosamente por "ya existe" sin cargarse nunca. Se agrega un
+        # hash corto y deterministico de definition.name a la clave para
+        # que cada hallazgo distinto tenga un name unico, incluso
+        # compartiendo activo+puerto.
+        def_name = str(row.get("definition.name", ""))
+        def_hash = hashlib.sha256(def_name.encode("utf-8")).hexdigest()[:8]
+        vuln_name = f"VUL_{row['asset_id_canonical']}_{row['port']}_{def_hash}"
         severity_op = _severity_openpages(row["severity"])
         field_list = [
             _field(fm["port"], int(row["port"]) if pd.notna(row["port"]) else None),
