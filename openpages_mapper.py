@@ -22,6 +22,30 @@ ACTUALIZADO — esquema real confirmado contra la instancia OpenPages 9.2
     acepta High/Medium/Low (confirmado por API) -> SEVERITY_MAP colapsa
     Critical->High e Info->Low, que es correcto para ese campo.
 
+CORREGIDO EN ESTA SESION — formato real del payload esperado por la API v2
+(confirmado contra el "GRC REST API V1 Reference Guide" de IBM, secciones
+/types y /contents). Esta es la causa mas probable del error 400 con el
+que quedo bloqueada la sesion anterior:
+
+  - Las claves de nivel superior del objeto van en camelCase, NO snake_case:
+    "typeDefinitionId" (no "type_definition_id"), "primaryParentId" (no
+    "primary_parent_id"). El payload anterior mandaba las claves en
+    snake_case, que la API simplemente no reconoce como sus atributos
+    reales -> por eso terminaba tratando todo como campos de sistema
+    desconocidos ("fieldId: null is read only").
+  - "fields" NO es un array plano. Es un objeto contenedor con una sola
+    clave "field" que sí es el array:
+        "fields": { "field": [ {...}, {...} ] }
+    en vez de:
+        "fields": [ {...}, {...} ]
+  - Cada elemento de ese array usa la clave "dataType" (camelCase), no
+    "data_type".
+  - Confirmado en el PDF (pág. 17, ejemplo de creacion de Action Item): el
+    "typeDefinitionId" en el POST a /contents es el MISMO id (o name) que
+    devuelve /types -- no requiere resolverse vía un endpoint separado de
+    profiles/templates como se especulo en la sesion anterior. Esa
+    hipotesis queda descartada.
+
 Sigue pendiente antes de una carga real:
   - Confirmar type_definition_id vigente vía get_all_types() en el momento
     de la carga (no hardcodear un ID viejo si la instancia se reconstruye).
@@ -30,7 +54,9 @@ Sigue pendiente antes de una carga real:
     External System:Severity (3 niveles).
   - Construir la tabla de correspondencia asset_id_canonical -> ID real de
     Asset2 en OpenPages (sigue usando el mismo mecanismo de
-    _pending_asset_lookup / _asset_id_canonical de antes).
+    _pending_asset_lookup / _asset_id_canonical de antes -- estos dos
+    siguen siendo campos auxiliares NUESTROS que load_to_openpages.py debe
+    remover del payload antes del POST; no son parte del esquema de la API).
 
 Uso:
     from openpages_mapper import build_vulnerability_payloads, build_asset_payloads
@@ -131,7 +157,21 @@ SEVERITY_RATING_MAP = {
 
 
 def _field(name, data_type, value):
-    return {"name": name, "data_type": data_type, "value": value}
+    """Construye un elemento de campo en el formato real de la API v2:
+    clave "dataType" en camelCase (NO "data_type"). Este dict va dentro
+    del array "field" anidado bajo "fields" (ver _wrap_fields)."""
+    return {"name": name, "dataType": data_type, "value": value}
+
+
+def _wrap_fields(field_list):
+    """Envuelve una lista de campos en el contenedor real que espera la
+    API: "fields": {"field": [...]}. Confirmado contra los ejemplos
+    oficiales del GRC REST API Reference Guide (secciones /contents,
+    "Updating a GRC Object"). Un array plano bajo "fields" NO es
+    reconocido por la API y es la causa mas probable del error
+    'fieldId : null is read only and cannot be changed.' visto en la
+    sesion anterior."""
+    return {"field": field_list}
 
 
 def _severity_openpages(tenable_severity):
@@ -144,35 +184,40 @@ def _severity_rating_openpages(tenable_severity):
 
 def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por fila del Excel limpio, listo para
-    POST /openpages/api/v2/contents (con type_definition_id y
-    primary_parent_id a resolver en tiempo de ejecución)."""
+    POST /openpages/api/v2/contents (con typeDefinitionId y
+    primaryParentId a resolver en tiempo de ejecución).
+
+    NOTA: "_pending_asset_lookup" es un campo AUXILIAR nuestro (no de la
+    API) que load_to_openpages.py usa para resolver primaryParentId y
+    luego debe eliminar del payload antes de hacer el POST real."""
     fm = FIELD_MAP_VULNERABILITY
     payloads = []
     for _, row in clean_df.iterrows():
         vuln_name = f"VUL_{row['asset_id_canonical']}_{row['port']}"
         severity_op = _severity_openpages(row["severity"])
+        field_list = [
+            _field(fm["name"], "STRING_TYPE", vuln_name),
+            _field(fm["description"], "STRING_TYPE", str(row["definition.name"])),
+            _field(fm["port"], "INTEGER_TYPE", int(row["port"]) if pd.notna(row["port"]) else None),
+            _field(
+                fm["domain_or_host"],
+                "STRING_TYPE",
+                str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
+            ),
+            _field(fm["risk_rating"], "ENUM_TYPE", {"name": severity_op}),
+            _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", {"name": severity_op}),
+            _field(fm["status"], "ENUM_TYPE", {"name": "Open"}),
+            _field(fm["status_demo"], "ENUM_TYPE", {"name": "Open"}),
+            _field(fm["scan_output"], "STRING_TYPE", str(row.get("output", ""))),
+            _field(fm["scanning_vendor"], "ENUM_TYPE", {"name": "Tenable"}),
+        ]
         payload = {
-            "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_VULNERABILITY)
-            "primary_parent_id": None,   # ID del Asset2 en OpenPages — ver _pending_asset_lookup
+            "typeDefinitionId": None,  # resolver con get_all_types(..., TYPE_NAME_VULNERABILITY)
+            "primaryParentId": None,   # ID del Asset2 en OpenPages — ver _pending_asset_lookup
             "_pending_asset_lookup": row["asset_id_canonical"],
             "name": vuln_name,
             "description": f"Carga automatizada desde Tenable — {row['definition.name']}",
-            "fields": [
-                _field(fm["name"], "STRING_TYPE", vuln_name),
-                _field(fm["description"], "STRING_TYPE", str(row["definition.name"])),
-                _field(fm["port"], "INTEGER_TYPE", int(row["port"]) if pd.notna(row["port"]) else None),
-                _field(
-                    fm["domain_or_host"],
-                    "STRING_TYPE",
-                    str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
-                ),
-                _field(fm["risk_rating"], "ENUM_TYPE", {"name": severity_op}),
-                _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", {"name": severity_op}),
-                _field(fm["status"], "ENUM_TYPE", {"name": "Open"}),
-                _field(fm["status_demo"], "ENUM_TYPE", {"name": "Open"}),
-                _field(fm["scan_output"], "STRING_TYPE", str(row.get("output", ""))),
-                _field(fm["scanning_vendor"], "ENUM_TYPE", {"name": "Tenable"}),
-            ],
+            "fields": _wrap_fields(field_list),
         }
         payloads.append(payload)
     return payloads
@@ -181,23 +226,28 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
 def build_asset_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por activo único (asset_id_canonical) para el
     objeto Asset2 (name técnico "Asset", ver FIELD_MAP_ASSET).
-    primary_parent_id no aplica aquí (es el objeto padre); se usa
+    primaryParentId no aplica aquí (es el objeto padre); se usa
     asset_id_canonical como clave de negocio temporal hasta tener la tabla
-    de correspondencia con el ID real de OpenPages."""
+    de correspondencia con el ID real de OpenPages.
+
+    NOTA: "_asset_id_canonical" es un campo AUXILIAR nuestro (no de la
+    API) que load_to_openpages.py usa para construir la tabla de
+    correspondencia y luego debe eliminar del payload antes del POST."""
     fm = FIELD_MAP_ASSET
     assets = clean_df.drop_duplicates(subset="asset_id_canonical")
     payloads = []
     for _, row in assets.iterrows():
+        field_list = [
+            _field(fm["host_name"], "STRING_TYPE", str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else None),
+            _field(fm["ipv4"], "STRING_TYPE", str(row["asset.ipv4_addresses"])),
+            _field(fm["operating_system"], "STRING_TYPE", str(row["asset.operating_system"])),
+            _field(fm["tags"], "STRING_TYPE", str(row.get("asset.tags", ""))),
+        ]
         payload = {
-            "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_ASSET)
+            "typeDefinitionId": None,  # resolver con get_all_types(..., TYPE_NAME_ASSET)
             "_asset_id_canonical": row["asset_id_canonical"],
             "name": str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
-            "fields": [
-                _field(fm["host_name"], "STRING_TYPE", str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else None),
-                _field(fm["ipv4"], "STRING_TYPE", str(row["asset.ipv4_addresses"])),
-                _field(fm["operating_system"], "STRING_TYPE", str(row["asset.operating_system"])),
-                _field(fm["tags"], "STRING_TYPE", str(row.get("asset.tags", ""))),
-            ],
+            "fields": _wrap_fields(field_list),
         }
         payloads.append(payload)
     return payloads
@@ -211,11 +261,15 @@ def build_openpages_export(clean_df: pd.DataFrame) -> dict:
         "_notas": (
             "Esquema confirmado contra la instancia real (Object Types export + "
             "API /types): Vulnerability id=127, Asset2 (name tecnico 'Asset') "
-            "id=136. type_definition_id y primary_parent_id vienen en None -- "
+            "id=136. typeDefinitionId y primaryParentId vienen en None -- "
             "se resuelven en tiempo de ejecucion con get_all_types() y con la "
             "tabla de correspondencia asset_id_canonical -> ID real de Asset2 "
             "(pendiente, ver README). Verificar KNOWN_TYPE_IDS contra "
-            "get_all_types() antes de cargar, por si la instancia cambio."
+            "get_all_types() antes de cargar, por si la instancia cambio. "
+            "FORMATO DE PAYLOAD CORREGIDO en esta version: claves raiz en "
+            "camelCase (typeDefinitionId, primaryParentId) y 'fields' "
+            "envuelto como {'field': [...]}, con 'dataType' (no 'data_type') "
+            "en cada campo -- ver comentarios al inicio del archivo."
         ),
         "assets": build_asset_payloads(clean_df),
         "vulnerabilities": build_vulnerability_payloads(clean_df),
