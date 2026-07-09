@@ -22,36 +22,41 @@ ACTUALIZADO — esquema real confirmado contra la instancia OpenPages 9.2
     acepta High/Medium/Low (confirmado por API) -> SEVERITY_MAP colapsa
     Critical->High e Info->Low, que es correcto para ese campo.
 
-CORREGIDO (sesion anterior) — formato real del nivel superior del payload:
-  - Claves raiz en camelCase: "typeDefinitionId" (no "type_definition_id"),
-    "primaryParentId" (no "primary_parent_id").
-  - "fields" es un objeto contenedor, no un array plano:
-        "fields": { "field": [ {...}, {...} ] }
-  - Cada elemento del array usa la clave "dataType" (camelCase), no
-    "data_type".
-  - Confirmado en el PDF (pág. 17): "typeDefinitionId" es el mismo id/name
-    que devuelve /types -- no requiere un endpoint de profiles/templates.
+CORREGIDO EN ESTA SESION — DESCUBRIMIENTO DE FONDO: todas las correcciones
+de formato de sesiones anteriores (camelCase, fields envuelto en
+{"field": [...]}, enumValue/multiEnumValue) se basaron en el PDF "GRC REST
+API V1 Reference Guide". Pero BASE_URL apunta a /openpages/api/v2 -- la API
+V2, que tiene un esquema de payload DISTINTO. Confirmado contra la
+especificacion OpenAPI oficial de IBM para v2 9.1
+(ejemplo real de POST /v2/contents):
 
-CORREGIDO EN ESTA SESION — segundo bug de formato, esta vez a nivel de cada
-campo individual (confirmado contra el PDF, pág. 20-21, sección "Updating a
-GRC Object"). El helper _field() anterior mandaba TODOS los campos con la
-clave "value", incluidos los ENUM_TYPE y MULTI_VALUE_ENUM. Eso es correcto
-solo para STRING_TYPE/INTEGER_TYPE/FLOAT_TYPE/BOOLEAN_TYPE/DATE_TYPE, pero
-NO para los tipos enum, que usan claves distintas:
+    {
+      "fields": [
+        {"id": "141", "name": "OPLC-Std:LCComment", "value": "Object comment"},
+        {"name": "OPSS-Iss:Identified By Group",
+         "value": [{"name": "Internal Audit"}, {"id": "3484"}]},
+        {"name": "OPSS-Iss:Status", "value": {"name": "Open"}}
+      ],
+      "type_definition_id": "6",
+      "name": "TestObjectCreate",
+      "description": "Test GRC Object create V2"
+    }
 
-  - ENUM_TYPE            -> clave "enumValue": {"name": "..."}
-                             (NO "value": {"name": "..."})
-  - MULTI_VALUE_ENUM      -> clave "multiEnumValue": {"enumValue": [ {...} ]}
-                             -- SIEMPRE un array, incluso con un solo valor
-                             (NO "value": {"name": "..."})
-  - Todo lo demas (STRING_TYPE, INTEGER_TYPE, FLOAT_TYPE, BOOLEAN_TYPE,
-    DATE_TYPE, CURRENCY_TYPE) -> clave "value": <valor plano>
-
-_field() ahora arma la clave correcta segun el data_type recibido. Los
-campos afectados en nuestro mapeo eran: Demo-Vulner:Risk Rating,
-Demo-Vulner:Status, Demo-Vulner:Scanning Vendor,
-External System...:Status (ENUM_TYPE), y External System...:Severity
-(MULTI_VALUE_ENUM).
+En la V2 real:
+  - Las claves raiz van en snake_case: "type_definition_id",
+    "primary_parent_id" (NO camelCase como asumimos antes).
+  - "fields" es un ARRAY PLANO, NO un objeto envuelto en {"field": [...]}.
+  - No existe "dataType"/"data_type" en el payload de creacion -- la API
+    resuelve el tipo de dato del campo por su nombre/id. Cada field es
+    simplemente {"name": ..., "value": ...} (o {"id": ..., "value": ...}).
+  - No existen las claves "enumValue"/"multiEnumValue". TODO usa una unica
+    clave "value":
+      - Un solo valor enum:      "value": {"name": "Medium"}
+      - Multiples valores enum:  "value": [{"name": "Medium"}, ...]
+      - Cualquier otro tipo:     "value": <el valor plano>
+  - "typeDefinitionId cannot be null" / "systemName cannot be null" que
+    vimos en corridas anteriores eran sintomas de este desajuste de
+    esquema (V1 vs V2), no de otro bug adicional.
 
 Sigue pendiente antes de una carga real:
   - Confirmar type_definition_id vigente vía get_all_types() en el momento
@@ -134,6 +139,25 @@ ASSET_ENUM_VALUES = {
     "Demo-Asset:Managed State": ["Managed", "Unmanaged"],
 }
 
+# Campos que en nuestro mapeo son ENUM_TYPE de un solo valor (para saber
+# como formar "value": {"name": ...} en vez de un valor plano).
+_SINGLE_ENUM_FIELDS = {
+    "Demo-Vulner:Risk Rating",
+    "Demo-Vulner:Status",
+    "Demo-Vulner:Type",
+    "Demo-Vulner:Scanning Vendor",
+    "External System - Application Vulnerability:Status",
+    "Demo-Asset:Asset Type",
+    "Demo-Asset:Confidentiality",
+    "Demo-Asset:Managed State",
+}
+
+# Campos que en nuestro mapeo son MULTI_VALUE_ENUM (para saber como formar
+# "value": [{"name": ...}, ...] en vez de un valor plano o un solo dict).
+_MULTI_ENUM_FIELDS = {
+    "External System - Application Vulnerability:Severity",
+}
+
 # type_definition_id conocidos de esta instancia (verificar de nuevo con
 # get_all_types() antes de una carga real — pueden cambiar si la instancia
 # se reconstruye).
@@ -162,52 +186,33 @@ SEVERITY_RATING_MAP = {
     "Info": "1",
 }
 
-# data_type que la API representa como enumValue (un solo objeto {"name": ...})
-_SINGLE_ENUM_TYPES = {"ENUM_TYPE"}
-# data_type que la API representa como multiEnumValue: {"enumValue": [...]}
-_MULTI_ENUM_TYPES = {"MULTI_VALUE_ENUM"}
+
+def _field(name, value):
+    """Construye un elemento de campo en el formato REAL de la API v2:
+    simplemente {"name": ..., "value": ...}. No existe "dataType" ni
+    "enumValue"/"multiEnumValue" en el payload de creacion/actualizacion --
+    la API resuelve el tipo internamente por el nombre/id del campo.
+
+    El llamador es responsable de darle a `value` la forma correcta segun
+    el tipo del campo (ver _enum_value / _multi_enum_value)."""
+    return {"name": name, "value": value}
 
 
-def _field(name, data_type, value):
-    """Construye un elemento de campo en el formato real de la API v2.
-
-    - Para ENUM_TYPE: la clave del valor es "enumValue" y su contenido es
-      un solo dict, p.ej. {"name": "Medium"}.
-    - Para MULTI_VALUE_ENUM: la clave del valor es "multiEnumValue" y su
-      contenido es {"enumValue": [ {"name": "..."} , ... ]} -- SIEMPRE un
-      array, aunque solo se mande un valor.
-    - Para cualquier otro data_type (STRING_TYPE, INTEGER_TYPE, FLOAT_TYPE,
-      BOOLEAN_TYPE, DATE_TYPE, CURRENCY_TYPE): la clave es "value" con el
-      valor tal cual se recibe.
-
-    `value` para los casos enum puede pasarse como:
-      - un dict {"name": "..."} (un solo valor), o
-      - una lista de dicts [{"name": "..."}, ...] (varios valores, solo
-        tiene sentido para MULTI_VALUE_ENUM).
+def _plain_or_enum_value(field_name, raw_value):
+    """Dado el nombre TECNICO real del campo (p.ej. 'Demo-Vulner:Risk
+    Rating') y un valor 'crudo' (string simple), devuelve el `value` con
+    la forma que esa API v2 espera para ese campo:
+      - Si el campo es un ENUM_TYPE de un solo valor (ver
+        _SINGLE_ENUM_FIELDS): {"name": raw_value}
+      - Si el campo es MULTI_VALUE_ENUM (ver _MULTI_ENUM_FIELDS):
+        [{"name": raw_value}]
+      - En cualquier otro caso: raw_value tal cual (string, int, etc.)
     """
-    field_obj = {"name": name, "dataType": data_type}
-
-    if data_type in _SINGLE_ENUM_TYPES:
-        # value debe ser un solo dict {"name": ...}; si por error llega una
-        # lista de un elemento, tomamos el primero.
-        enum_val = value[0] if isinstance(value, list) else value
-        field_obj["enumValue"] = enum_val
-    elif data_type in _MULTI_ENUM_TYPES:
-        # Normalizamos siempre a lista, aunque nos pasen un solo dict.
-        enum_list = value if isinstance(value, list) else [value]
-        field_obj["multiEnumValue"] = {"enumValue": enum_list}
-    else:
-        field_obj["value"] = value
-
-    return field_obj
-
-
-def _wrap_fields(field_list):
-    """Envuelve una lista de campos en el contenedor real que espera la
-    API: "fields": {"field": [...]}. Confirmado contra los ejemplos
-    oficiales del GRC REST API Reference Guide (secciones /contents,
-    "Updating a GRC Object")."""
-    return {"field": field_list}
+    if field_name in _SINGLE_ENUM_FIELDS:
+        return {"name": raw_value}
+    if field_name in _MULTI_ENUM_FIELDS:
+        return [{"name": raw_value}]
+    return raw_value
 
 
 def _severity_openpages(tenable_severity):
@@ -220,11 +225,11 @@ def _severity_rating_openpages(tenable_severity):
 
 def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por fila del Excel limpio, listo para
-    POST /openpages/api/v2/contents (con typeDefinitionId y
-    primaryParentId a resolver en tiempo de ejecución).
+    POST /openpages/api/v2/contents (con type_definition_id y
+    primary_parent_id a resolver en tiempo de ejecución).
 
     NOTA: "_pending_asset_lookup" es un campo AUXILIAR nuestro (no de la
-    API) que load_to_openpages.py usa para resolver primaryParentId y
+    API) que load_to_openpages.py usa para resolver primary_parent_id y
     luego debe eliminar del payload antes de hacer el POST real."""
     fm = FIELD_MAP_VULNERABILITY
     payloads = []
@@ -232,28 +237,27 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
         vuln_name = f"VUL_{row['asset_id_canonical']}_{row['port']}"
         severity_op = _severity_openpages(row["severity"])
         field_list = [
-            _field(fm["name"], "STRING_TYPE", vuln_name),
-            _field(fm["description"], "STRING_TYPE", str(row["definition.name"])),
-            _field(fm["port"], "INTEGER_TYPE", int(row["port"]) if pd.notna(row["port"]) else None),
+            _field(fm["name"], vuln_name),
+            _field(fm["description"], str(row["definition.name"])),
+            _field(fm["port"], int(row["port"]) if pd.notna(row["port"]) else None),
             _field(
                 fm["domain_or_host"],
-                "STRING_TYPE",
                 str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
             ),
-            _field(fm["risk_rating"], "ENUM_TYPE", {"name": severity_op}),
-            _field(fm["severity_multi_enum"], "MULTI_VALUE_ENUM", [{"name": severity_op}]),
-            _field(fm["status"], "ENUM_TYPE", {"name": "Open"}),
-            _field(fm["status_demo"], "ENUM_TYPE", {"name": "Open"}),
-            _field(fm["scan_output"], "STRING_TYPE", str(row.get("output", ""))),
-            _field(fm["scanning_vendor"], "ENUM_TYPE", {"name": "Tenable"}),
+            _field(fm["risk_rating"], _plain_or_enum_value(fm["risk_rating"], severity_op)),
+            _field(fm["severity_multi_enum"], _plain_or_enum_value(fm["severity_multi_enum"], severity_op)),
+            _field(fm["status"], _plain_or_enum_value(fm["status"], "Open")),
+            _field(fm["status_demo"], _plain_or_enum_value(fm["status_demo"], "Open")),
+            _field(fm["scan_output"], str(row.get("output", ""))),
+            _field(fm["scanning_vendor"], _plain_or_enum_value(fm["scanning_vendor"], "Tenable")),
         ]
         payload = {
-            "typeDefinitionId": None,  # resolver con get_all_types(..., TYPE_NAME_VULNERABILITY)
-            "primaryParentId": None,   # ID del Asset2 en OpenPages — ver _pending_asset_lookup
+            "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_VULNERABILITY)
+            "primary_parent_id": None,   # ID del Asset2 en OpenPages — ver _pending_asset_lookup
             "_pending_asset_lookup": row["asset_id_canonical"],
             "name": vuln_name,
             "description": f"Carga automatizada desde Tenable — {row['definition.name']}",
-            "fields": _wrap_fields(field_list),
+            "fields": field_list,
         }
         payloads.append(payload)
     return payloads
@@ -262,35 +266,28 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
 def build_asset_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por activo único (asset_id_canonical) para el
     objeto Asset2 (name técnico "Asset", ver FIELD_MAP_ASSET).
-    primaryParentId no aplica aquí (es el objeto padre); se usa
+    primary_parent_id no aplica aquí (es el objeto padre); se usa
     asset_id_canonical como clave de negocio temporal hasta tener la tabla
     de correspondencia con el ID real de OpenPages.
 
     NOTA: "_asset_id_canonical" es un campo AUXILIAR nuestro (no de la
     API) que load_to_openpages.py usa para construir la tabla de
-    correspondencia y luego debe eliminar del payload antes del POST.
-
-    Nota: los campos de Asset en este mapeo (host_name, ipv4,
-    operating_system, tags) son todos STRING_TYPE, asi que no se ven
-    afectados por el bug de enumValue/multiEnumValue corregido en esta
-    sesion. Si en el futuro se agregan asset_type / confidentiality /
-    managed_state (que si son ENUM_TYPE segun ASSET_ENUM_VALUES), ya
-    quedaran bien formados automaticamente por _field()."""
+    correspondencia y luego debe eliminar del payload antes del POST."""
     fm = FIELD_MAP_ASSET
     assets = clean_df.drop_duplicates(subset="asset_id_canonical")
     payloads = []
     for _, row in assets.iterrows():
         field_list = [
-            _field(fm["host_name"], "STRING_TYPE", str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else None),
-            _field(fm["ipv4"], "STRING_TYPE", str(row["asset.ipv4_addresses"])),
-            _field(fm["operating_system"], "STRING_TYPE", str(row["asset.operating_system"])),
-            _field(fm["tags"], "STRING_TYPE", str(row.get("asset.tags", ""))),
+            _field(fm["host_name"], str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else None),
+            _field(fm["ipv4"], str(row["asset.ipv4_addresses"])),
+            _field(fm["operating_system"], str(row["asset.operating_system"])),
+            _field(fm["tags"], str(row.get("asset.tags", ""))),
         ]
         payload = {
-            "typeDefinitionId": None,  # resolver con get_all_types(..., TYPE_NAME_ASSET)
+            "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_ASSET)
             "_asset_id_canonical": row["asset_id_canonical"],
             "name": str(row["asset.host_name"]) if pd.notna(row["asset.host_name"]) else str(row["asset.ipv4_addresses"]),
-            "fields": _wrap_fields(field_list),
+            "fields": field_list,
         }
         payloads.append(payload)
     return payloads
@@ -302,19 +299,16 @@ def build_openpages_export(clean_df: pd.DataFrame) -> dict:
     ejemplo_carga.py para el patrón de POST real)."""
     return {
         "_notas": (
-            "Esquema confirmado contra la instancia real (Object Types export + "
-            "API /types): Vulnerability id=127, Asset2 (name tecnico 'Asset') "
-            "id=136. typeDefinitionId y primaryParentId vienen en None -- "
-            "se resuelven en tiempo de ejecucion con get_all_types() y con la "
-            "tabla de correspondencia asset_id_canonical -> ID real de Asset2 "
-            "(pendiente, ver README). Verificar KNOWN_TYPE_IDS contra "
-            "get_all_types() antes de cargar, por si la instancia cambio. "
-            "FORMATO DE PAYLOAD CORREGIDO: claves raiz en camelCase "
-            "(typeDefinitionId, primaryParentId), 'fields' envuelto como "
-            "{'field': [...]}, 'dataType' (no 'data_type') en cada campo, y "
-            "ENUM_TYPE/MULTI_VALUE_ENUM usan 'enumValue'/'multiEnumValue' "
-            "en vez de 'value' generico -- ver comentarios al inicio del "
-            "archivo."
+            "Esquema confirmado contra la especificacion oficial de la API "
+            "OpenPages REST V2 9.1: claves raiz en snake_case "
+            "(type_definition_id, primary_parent_id), 'fields' como ARRAY "
+            "PLANO (no envuelto), y cada campo es simplemente "
+            "{'name':..., 'value':...} -- sin 'dataType', sin 'enumValue', "
+            "sin 'multiEnumValue'. Para un solo valor enum, value es "
+            "{'name': '...'}; para MULTI_VALUE_ENUM, value es una lista "
+            "[{'name': '...'}]. Vulnerability id=127, Asset2 (name tecnico "
+            "'Asset') id=136 -- verificar con get_all_types() antes de "
+            "cargar por si la instancia cambio."
         ),
         "assets": build_asset_payloads(clean_df),
         "vulnerabilities": build_vulnerability_payloads(clean_df),
