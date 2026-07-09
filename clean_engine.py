@@ -162,6 +162,11 @@ def clean_tenable_export(path_or_df, joyas_path_or_df=None):
         "asset_id_canonical", "asset.host_name", "asset.ipv4_addresses",
         "asset.operating_system", "os_variants_seen", "port", "output",
         "definition.name", "severity", "last_seen", "merged_duplicate_count",
+        # Agregados para mapeo directo a campos reales confirmados en
+        # OpenPages: Demo-Vulner:CVE ID (STRING_TYPE) y External System -
+        # Application Vulnerability:CVSS_decimal (FLOAT_TYPE). Se toman de
+        # aquí en vez de derivarse, para no perder precisión/información.
+        "definition.cve", "definition.cvss3.base_score",
     ]
     clean_out = clean[output_cols].sort_values(
         by=["asset.host_name", "definition.name"]

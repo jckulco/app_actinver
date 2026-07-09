@@ -144,6 +144,10 @@ FIELD_MAP_VULNERABILITY = {
     "status": "External System - Application Vulnerability:Status",
     "scan_output": "External System - Application Vulnerability:Issue Type",
     "path": "External System - Application Vulnerability:Path",
+    # Confirmado via GET /v2/types/127 (inspect_type_fields.py): campo real
+    # FLOAT_TYPE, encaja directo con definition.cvss3.base_score de Tenable
+    # (0-10, sin perdida de precision vs. derivar desde el bucket categorico).
+    "cvss_decimal": "External System - Application Vulnerability:CVSS_decimal",
 }
 
 # Valores validos por campo ENUM, para validar antes de mandar el POST real.
@@ -171,12 +175,20 @@ FIELD_MAP_ASSET = {
     "asset_type": "Demo-Asset:Asset Type",           # ENUM: Desktops, Servers, Networks
     "confidentiality": "Demo-Asset:Confidentiality", # ENUM: High, Medium, Low
     "managed_state": "Demo-Asset:Managed State",     # ENUM: Managed, Unmanaged
+    # Confirmados via GET /v2/types/136 (inspect_type_fields.py). Se usan
+    # para reflejar la clasificacion "Joya de la Corona" (clean_engine.py,
+    # es_joya_corona/clasificacion_joyas) en campos reales de OpenPages,
+    # en vez de que esa clasificacion se quede solo en el Excel de salida.
+    "data_classification_level": "Demo-Asset:Data Classification Level",  # ENUM: Public, Internal, Confidential
+    "risk_score": "Demo-Asset:RiskScore",                                  # ENUM: High, Medium, Low
 }
 
 ASSET_ENUM_VALUES = {
     "Demo-Asset:Asset Type": ["Desktops", "Servers", "Networks"],
     "Demo-Asset:Confidentiality": ["High", "Medium", "Low"],
     "Demo-Asset:Managed State": ["Managed", "Unmanaged"],
+    "Demo-Asset:Data Classification Level": ["Public", "Internal", "Confidential"],
+    "Demo-Asset:RiskScore": ["High", "Medium", "Low"],
 }
 
 # Campos que en nuestro mapeo son ENUM_TYPE de un solo valor (para saber
@@ -190,6 +202,8 @@ _SINGLE_ENUM_FIELDS = {
     "Demo-Asset:Asset Type",
     "Demo-Asset:Confidentiality",
     "Demo-Asset:Managed State",
+    "Demo-Asset:Data Classification Level",
+    "Demo-Asset:RiskScore",
 }
 
 # Campos que en nuestro mapeo son MULTI_VALUE_ENUM (para saber como formar
@@ -295,6 +309,21 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
             _field(fm["scan_output"], str(row.get("output", ""))),
             _field(fm["scanning_vendor"], _plain_or_enum_value(fm["scanning_vendor"], "Tenable")),
         ]
+
+        # CVE ID (STRING_TYPE): Tenable trae 0..N CVEs separados por coma en
+        # definition.cve; se manda tal cual como texto (el campo real no es
+        # una lista estructurada, es un STRING_TYPE simple). Se omite el
+        # campo por completo si no hay CVE (evita mandar "nan"/vacio).
+        cve_raw = row.get("definition.cve")
+        if pd.notna(cve_raw) and str(cve_raw).strip():
+            field_list.append(_field(fm["cve"], str(cve_raw).strip()))
+
+        # CVSS score (FLOAT_TYPE real, confirmado via inspect_type_fields.py):
+        # se manda el valor numerico de Tenable tal cual, sin pasar por el
+        # bucket categorico de 5 niveles -- mayor precision para GRC.
+        cvss_raw = row.get("definition.cvss3.base_score")
+        if pd.notna(cvss_raw):
+            field_list.append(_field(fm["cvss_decimal"], float(cvss_raw)))
         payload = {
             "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_VULNERABILITY)
             "primary_parent_id": None,   # ID del Asset2 en OpenPages — ver _pending_asset_lookup
@@ -326,6 +355,23 @@ def build_asset_payloads(clean_df: pd.DataFrame) -> list:
             _field(fm["operating_system"], str(row["asset.operating_system"])),
             _field(fm["tags"], str(row.get("asset.tags", ""))),
         ]
+
+        # Clasificacion "Joya de la Corona" (clean_engine.py: es_joya_corona /
+        # clasificacion_joyas), mapeada a campos reales confirmados de
+        # OpenPages en vez de quedarse solo en el Excel de salida. Solo se
+        # manda si el pipeline corrio con el listado de joyas (columna
+        # presente); si no, se omite el field por completo (no se asume
+        # "no es joya" cuando en realidad no se evaluo).
+        if "es_joya_corona" in row.index and bool(row.get("es_joya_corona")):
+            field_list.append(
+                _field(
+                    fm["data_classification_level"],
+                    _plain_or_enum_value(fm["data_classification_level"], "Confidential"),
+                )
+            )
+            field_list.append(
+                _field(fm["risk_score"], _plain_or_enum_value(fm["risk_score"], "High"))
+            )
         payload = {
             "type_definition_id": None,  # resolver con get_all_types(..., TYPE_NAME_ASSET)
             "_asset_id_canonical": row["asset_id_canonical"],
