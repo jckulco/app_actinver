@@ -58,17 +58,21 @@ Standard Build 9600"), lo que genera:
 ├── openpages_mapper.py         # Mapeo del Excel limpio a payloads JSON de OpenPages
 ├── load_to_openpages.py         # Script de carga real (POST) contra la API v2 de OpenPages,
 │                                  con deduplicación de Assets y Vulnerabilities entre corridas
+├── inspect_type_fields.py       # Utilidad de solo lectura: lista los campos reales de un tipo
+│                                  (Vulnerability/Asset) via GET /v2/types/{id}
+├── cleanup_test_vulnerabilities.py  # Utilidad de una sola vez: borra objetos de prueba y limpia
+│                                      vuln_id_mapping.json (dry-run por default, --confirm para borrar)
 ├── requirements.txt
 ├── Dockerfile                   # Build para Code Engine (puerto 8080 vía $PORT)
 ├── .streamlit/config.toml       # Tema claro forzado (paleta IBM Carbon)
 └── DEPLOY.md                     # Guía paso a paso de despliegue en Code Engine
 ```
 
-> **Nota:** `load_to_openpages.py` no forma parte del build de Code Engine (no
-> está en el `Dockerfile`, que solo empaqueta la app Streamlit). Es un script
-> que se corre localmente/manualmente contra `openpages_payloads.json` una vez
-> que el archivo se descarga desde la app, típicamente vía `--dry-run` primero
-> y luego la carga real.
+> **Nota:** `load_to_openpages.py`, `inspect_type_fields.py` y
+> `cleanup_test_vulnerabilities.py` no forman parte del build de Code Engine
+> (no están en el `Dockerfile`, que solo empaqueta la app Streamlit). Son
+> scripts que se corren localmente/manualmente contra la instancia real de
+> OpenPages, típicamente vía `--dry-run` primero y luego la acción real.
 
 ## Exportación a OpenPages (`openpages_mapper.py`)
 
@@ -118,6 +122,56 @@ Puntos importantes a tener en cuenta antes de usar esto contra producción:
 Desde la app, el botón "Descargar payloads OpenPages (.json)" en el Paso 5
 genera este archivo listo para usar como insumo de `load_to_openpages.py`.
 
+### Campos adicionales confirmados y mapeados (CVE, CVSS, Joya de la Corona)
+
+Además del mapeo base, se confirmaron contra el esquema real de la instancia
+(vía `inspect_type_fields.py`, que lista todos los `field_definitions` de un
+tipo con `GET /v2/types/{id}`) y ya están implementados en
+`openpages_mapper.py`:
+
+- **CVE**: `definition.cve` de Tenable → `Demo-Vulner:CVE ID` (STRING_TYPE).
+  Se manda tal cual (puede traer varios CVEs separados por coma); se omite
+  el campo si la vulnerabilidad no tiene CVE asociado.
+- **CVSS**: `definition.cvss3.base_score` de Tenable → `External System -
+  Application Vulnerability:CVSS_decimal` (FLOAT_TYPE real, confirmado por
+  API) — más preciso que derivar la severidad desde el bucket categórico de
+  5 niveles de Tenable.
+- **Joya de la Corona**: cuando `clean_engine.py` marca `es_joya_corona =
+  True`, el Asset correspondiente se manda con `Demo-Asset:Data
+  Classification Level = Confidential` y `Demo-Asset:RiskScore = High`
+  (ambos ENUM_TYPE reales, confirmados por API). Los assets que no son
+  Joya de la Corona no llevan estos dos campos en absoluto.
+
+Campos evaluados pero **descartados** por no tener match real en el esquema
+de la instancia de prueba: `exploited_by_malware` de Tenable no tiene
+equivalente (los candidatos más cercanos, `Ease of Exploitation`/
+`CVSS_Exploitability`, miden facilidad teórica de explotación, no
+explotación real confirmada — mapearlos sería engañoso). `state` de Tenable
+(`ACTIVE`/`RESURFACED`/`NEW`) tiene un match parcial en `OPSS-Vuln:Assessment
+Status` (`Re-Opened` ≈ `RESURFACED`), pero esa categoría `OPSS-Vuln:*` nunca
+se ha visto poblada con datos reales en esta instancia — pendiente de
+confirmar con el equipo de GRC antes de activarla.
+
+### Bugfix: colisión de nombres cuando un activo tiene 2+ vulnerabilidades en el mismo puerto
+
+El `name` de cada Vulnerability se construía como
+`VUL_{asset_id_canonical}_{port}` (solo activo + puerto). Con datos reales
+apareció el caso de un mismo activo con **dos vulnerabilidades distintas en
+el mismo puerto** (ej. dos hallazgos de Tenable sobre el 445/SMB), lo cual
+generaba el mismo `name` para ambas. Como `load_to_openpages.py` usa ese
+`name` como clave de deduplicación (`vuln_id_mapping.json`), la segunda
+vulnerabilidad se omitía silenciosamente por "ya existe" — se perdía sin
+ningún error visible.
+
+**Fix**: el `name` ahora incluye un hash corto y determinístico de
+`definition.name`: `VUL_{asset_id}_{port}_{hash8}`. Esto es un cambio de
+esquema — cualquier `vuln_id_mapping.json` generado antes de este fix queda
+con claves obsoletas (sin hash) que no van a matchear contra los nombres
+nuevos. Se usó `cleanup_test_vulnerabilities.py` para borrar los 2
+objetos de prueba creados con el esquema viejo y limpiar sus entradas del
+mapping, permitiendo que se recrearan limpios con el esquema nuevo — ya
+validado end-to-end (API + UI) contra la instancia real.
+
 ### Carga real a OpenPages (`load_to_openpages.py`)
 
 Script separado (no forma parte de la app Streamlit ni de su Dockerfile)
@@ -135,10 +189,15 @@ que toma `openpages_payloads.json` y hace el `POST` real (o simulado, con
   incluye avisos de valores de campo tipo ENUM que no coincidan con lo
   esperado (`AVISO enum: ...`), que no bloquean el envío pero conviene
   revisar antes de la carga real.
-- **Estado actual**: validado end-to-end (API + UI) con el subset de
-  prueba de 2 Assets + 2 Vulnerabilities. El lote completo (43 Assets +
-  50 Vulnerabilities) ya está consolidado en `openpages_payloads.json` y
-  pendiente de correr `--dry-run` y, si se ve limpio, la carga real.
+- **Estado actual**: pipeline completo (clean_engine → mapper → loader →
+  OpenPages → UI) validado end-to-end contra la instancia real, incluyendo
+  los campos nuevos (CVE, CVSS, Joya de la Corona) y el fix de colisión de
+  nombres — confirmado tanto por API (`carga_reporte.json`, incluyendo
+  `primary_parent_id` correcto incluso para un Asset creado en la misma
+  corrida) como visualmente en la UI. El lote completo (43 Assets + 50
+  Vulnerabilities) está consolidado en `openpages_payloads_full.json.bak`,
+  pendiente de renombrar a `openpages_payloads.json`, correr `--dry-run` y,
+  si se ve limpio, la carga real.
 
 ### Configuración de la instancia OpenPages (fuera del código)
 
@@ -249,6 +308,17 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
 - [x] Views de la instancia para el objeto `Asset`/`Asset2` — creadas y
   publicadas (`Demo-Task-Asset-ITG`, `Demo-Grid-Asset-ITG`); antes de esto
   los Assets se cargaban bien vía API pero no se podían ver en la UI.
+- [x] Agregar `definition.cve` y `definition.cvss3.base_score` a la salida
+  — confirmados contra el esquema real (`inspect_type_fields.py`) y
+  mapeados a `Demo-Vulner:CVE ID` y `External System - Application
+  Vulnerability:CVSS_decimal` respectivamente. Validado end-to-end.
+- [x] Clasificación "Joya de la Corona" mapeada a campos reales de
+  OpenPages (`Demo-Asset:Data Classification Level` = Confidential,
+  `Demo-Asset:RiskScore` = High) en vez de quedarse solo en el Excel de
+  salida. Validado end-to-end (API + UI).
+- [x] Bugfix: colisión de `name` de Vulnerability cuando un activo tiene
+  2+ vulnerabilidades distintas en el mismo puerto — el `name` ahora
+  incluye un hash de `definition.name`. Ver sección de bugfix más arriba.
 - [ ] **Confirmar si `Demo-Vulner:`/`Demo-Asset:` es la categoría real de
   producción de Actinver o solo la de la instancia de prueba (TechZone).**
   Ya está confirmado que en la instancia de prueba estos campos están
@@ -264,12 +334,15 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
   niveles, confirmado por API en la instancia de prueba) con el equipo de
   GRC — ver `SEVERITY_MAP` en `openpages_mapper.py`.
 - [ ] Correr `load_to_openpages.py --dry-run` con el lote completo (43
-  Assets + 50 Vulnerabilities, ya consolidado en `openpages_payloads.json`)
-  y revisar los avisos de enum (`AVISO enum: ...`) antes de la carga real.
-  Ya validado con el subset de prueba (2 Assets + 2 Vulnerabilities).
-- [ ] Agregar `definition.cve` a la salida si el objeto Vulnerability tiene
-  campo para CVE — es una clave más confiable que `definition.name` para
-  evitar duplicados entre escaneos.
+  Assets + 50 Vulnerabilities, en `openpages_payloads_full.json.bak`) y
+  revisar los avisos de enum (`AVISO enum: ...`) antes de la carga real.
+  Ya validado con un subset de prueba de 3 Vulnerabilities (incluyendo
+  CVE, CVSS y Joya de la Corona) contra la instancia real.
+- [ ] **`state`/`exploited_by_malware` de Tenable**: evaluados contra el
+  esquema real, sin match limpio (ver sección de campos adicionales más
+  arriba). Pendiente de decisión con el equipo de GRC antes de mapear
+  `state` a `OPSS-Vuln:Assessment Status` (categoría no usada aún en esta
+  instancia) o de agregar un campo nuevo para `exploited_by_malware`.
 - [ ] Agregar un `external_id`/`source_system_id` estable de Tenable (si
   existe) para que reimportaciones actualicen el mismo registro en vez
   de crear uno nuevo.
