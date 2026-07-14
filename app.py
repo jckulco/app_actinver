@@ -1,3 +1,6 @@
+import faulthandler
+faulthandler.enable()
+
 import io
 import json
 import pandas as pd
