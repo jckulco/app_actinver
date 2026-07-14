@@ -188,6 +188,70 @@ Es decir: activo + puerto + huella digital de a qué vulnerabilidad
 específica corresponde, para poder leer el nombre en el grid sin tener que
 abrir el registro.
 
+### Bugfix: error 500 `OP-03381` por campo `output` demasiado largo (>4000 bytes)
+
+En la carga real del lote completo (43 Assets + 50 Vulnerabilities), una
+vulnerabilidad falló con:
+
+```
+OP-03381: The specified value for "3796" is too long. The 4011 characters
+entered (4011 bytes) exceeds the maximum size of 4000 bytes.
+```
+
+El atributo `3796` es `External System - Application Vulnerability:Issue
+Type`, mapeado desde la columna `output` del Excel limpio (`fm["scan_output"]`
+en `build_vulnerability_payloads`). Tenable puede generar `output` muy largo
+en hallazgos con múltiples combinaciones reportadas (ej. Logjam, listando
+varias combinaciones SSL/TLS/Diffie-Hellman), y OpenPages rechaza cualquier
+STRING_TYPE que exceda 4000 bytes UTF-8.
+
+**Fix**: se agregó `_truncate_to_byte_limit()` en `openpages_mapper.py`, que
+trunca el valor de `output` a `MAX_SCAN_OUTPUT_BYTES = 3990` bytes (10 bytes
+de margen bajo el límite real), agregando el sufijo `[...truncado...]` cuando
+aplica. Se aplica automáticamente en `build_vulnerability_payloads` antes de
+armar el `field` de `scan_output`. Validado contra el registro real que
+había fallado (`AST-db41b2c9198c`, Logjam): el `output` de 4011 bytes originales
+queda en exactamente 3990 bytes en el payload, y en la re-carga con este fix
+la vulnerability se creó sin error.
+
+### Incidente de deploy: `Segmentation fault` en Code Engine por versiones no fijadas de `numpy`/`pyarrow`
+
+Después de actualizar `openpages_mapper.py` (fix anterior) y redesplegar, la
+app dejó de mostrar resultados: la limpieza corría bien (los insights de
+"Paso 2" se calculaban correctamente), pero la app moría silenciosamente en
+"Paso 3"/"Paso 4" (tablas con `st.dataframe`, generación del Excel o
+Altair), sin traceback — solo `Segmentation fault` en los logs de Code
+Engine (`ibmcloud ce application logs --name app-actinver`).
+
+**Causa**: `requirements.txt` fijaba `pandas==2.2.2` pero no fijaba
+`numpy` ni `pyarrow` (dependencias transitivas usadas por `pandas` y por
+`st.dataframe` internamente para convertir a Arrow). En un rebuild nuevo de
+la imagen, `pip install` jaló las últimas versiones disponibles de esas dos
+librerías al momento del build, con una combinación binaria incompatible con
+`pandas==2.2.2` en la imagen `python:3.11-slim` — un error a nivel de
+extensión C que no genera excepción de Python, solo tumba el proceso.
+
+**Fix**: fijar explícitamente `numpy` y `pyarrow` en `requirements.txt`:
+
+```
+streamlit==1.38.0
+pandas==2.2.2
+numpy==1.26.4
+pyarrow==16.1.0
+openpyxl==3.1.5
+altair==5.3.0
+```
+
+También se agregó `faulthandler.enable()` al inicio de `app.py` (antes de
+cualquier otro import), para que un futuro segfault deje un traceback de
+bajo nivel en los logs en vez de morir en silencio.
+
+**Lección para futuros cambios de dependencias**: cualquier librería que se
+agregue o actualice en `requirements.txt` debe fijar también sus
+dependencias transitivas relevantes (`numpy`, `pyarrow`), no solo el
+paquete de primer nivel — de lo contrario cada rebuild de la imagen puede
+jalar versiones distintas sin que el código haya cambiado.
+
 ### Carga real a OpenPages (`load_to_openpages.py`)
 
 Script separado (no forma parte de la app Streamlit ni de su Dockerfile)
@@ -378,11 +442,12 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
 - [ ] Validar el mapeo de severidad Tenable (5 niveles) → OpenPages (3
   niveles, confirmado por API en la instancia de prueba) con el equipo de
   GRC — ver `SEVERITY_MAP` en `openpages_mapper.py`.
-- [ ] Correr `load_to_openpages.py --dry-run` con el lote completo (43
-  Assets + 50 Vulnerabilities, en `openpages_payloads_full.json.bak`) y
-  revisar los avisos de enum (`AVISO enum: ...`) antes de la carga real.
-  Ya validado con un subset de prueba de 3 Vulnerabilities (incluyendo
-  CVE, CVSS y Joya de la Corona) contra la instancia real.
+- [x] Correr `load_to_openpages.py --dry-run` con el lote completo (43
+  Assets + 50 Vulnerabilities) y luego la carga real — completado: 43/43
+  Assets y 49/50 Vulnerabilities en el primer intento. La vulnerability
+  restante falló por `OP-03381` (campo `output` > 4000 bytes); ver bugfix
+  del truncado más arriba. Con el fix aplicado, el reintento del registro
+  faltante quedó pendiente de confirmar en la próxima carga real.
 - [ ] **`state`/`exploited_by_malware` de Tenable**: evaluados contra el
   esquema real, sin match limpio (ver sección de campos adicionales más
   arriba). Pendiente de decisión con el equipo de GRC antes de mapear
@@ -418,6 +483,11 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
   vulnerabilidades internas.
 - [ ] Configurar redeploy automático (webhook de GitHub → Code Engine) si el
   ciclo de "empujar cambio → disparar build manual" se vuelve tedioso.
+- [x] Fijar `numpy`/`pyarrow` en `requirements.txt` — un rebuild sin estas
+  versiones fijas causó un `Segmentation fault` en producción (ver
+  incidente de deploy más arriba). Revisar esta misma precaución la
+  próxima vez que se agregue o actualice cualquier dependencia con
+  extensiones nativas en C (no solo el paquete de primer nivel).
 
 ### Experiencia de usuario
 - [ ] Validar el flujo con la persona no técnica que lo va a usar en el día
