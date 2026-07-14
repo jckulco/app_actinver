@@ -284,6 +284,25 @@ def _severity_rating_openpages(tenable_severity):
     return SEVERITY_RATING_MAP.get(str(tenable_severity), "1")
 
 
+# OpenPages rechaza STRING_TYPE con OP-03381 si el valor excede 4000 bytes
+# UTF-8. Tenable a veces genera "output" muy largo (ej. listados de
+# combinaciones SSL/TLS en hallazgos Logjam/POODLE), asi que se trunca de
+# forma defensiva antes de mandarlo, dejando margen de seguridad.
+MAX_SCAN_OUTPUT_BYTES = 3990
+
+
+def _truncate_to_byte_limit(text: str, max_bytes: int = MAX_SCAN_OUTPUT_BYTES) -> str:
+    if not text:
+        return text
+    encoded = text.encode("utf-8")
+    if len(encoded) <= max_bytes:
+        return text
+    suffix = "\n[...truncado...]"
+    truncated = encoded[: max_bytes - len(suffix.encode("utf-8"))]
+    # decode con errors="ignore" evita romper un caracter multibyte cortado a la mitad
+    return truncated.decode("utf-8", errors="ignore") + suffix
+
+
 def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
     """Construye un payload por fila del Excel limpio, listo para
     POST /openpages/api/v2/contents (con type_definition_id y
@@ -319,7 +338,7 @@ def build_vulnerability_payloads(clean_df: pd.DataFrame) -> list:
             _field(fm["severity_multi_enum"], _plain_or_enum_value(fm["severity_multi_enum"], severity_op)),
             _field(fm["status"], _plain_or_enum_value(fm["status"], "Open")),
             _field(fm["status_demo"], _plain_or_enum_value(fm["status_demo"], "Open")),
-            _field(fm["scan_output"], str(row.get("output", ""))),
+            _field(fm["scan_output"], _truncate_to_byte_limit(str(row.get("output", "")))),
             _field(fm["scanning_vendor"], _plain_or_enum_value(fm["scanning_vendor"], "Tenable")),
         ]
 
