@@ -446,8 +446,10 @@ Pendientes concretos antes de automatizar la entrega a OpenPages:
   Assets + 50 Vulnerabilities) y luego la carga real — completado: 43/43
   Assets y 49/50 Vulnerabilities en el primer intento. La vulnerability
   restante falló por `OP-03381` (campo `output` > 4000 bytes); ver bugfix
-  del truncado más arriba. Con el fix aplicado, el reintento del registro
-  faltante quedó pendiente de confirmar en la próxima carga real.
+  del truncado más arriba. **Confirmado con un dry-run posterior**: los 43
+  Assets y las 50 Vulnerabilities (incluyendo el registro que había
+  fallado, `VUL_AST-db41b2c9198c_3389_...`) ya existen en la instancia —
+  el lote completo quedó 100% cargado y validado.
 - [ ] **`state`/`exploited_by_malware` de Tenable**: evaluados contra el
   esquema real, sin match limpio (ver sección de campos adicionales más
   arriba). Pendiente de decisión con el equipo de GRC antes de mapear
